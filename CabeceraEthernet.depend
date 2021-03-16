@@ -1,0 +1,14 @@
+# depslib dependency file v1.0
+1615158767 source:c:\users\anthonysandoval\desktop\s4\redes\cabeceraethernet\main.cpp
+	<iostream>
+	<vector>
+	<string>
+	<fstream>
+
+1615161379 source:c:\users\anthonysandoval\desktop\s4\redes\equipo3_programa\main.cpp
+	<iostream>
+	<vector>
+	<string>
+	<fstream>
+	<conio.h>
+
