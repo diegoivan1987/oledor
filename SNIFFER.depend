@@ -1,0 +1,33 @@
+# depslib dependency file v1.0
+1615913935 source:c:\users\anthonysandoval\desktop\s4\estructuradatosii\sniffer\main.cpp
+	<iostream>
+	<string>
+	<conio.h>
+	"Archivo.h"
+	"CabeceraEthernet.h"
+
+1615914133 c:\users\anthonysandoval\desktop\s4\estructuradatosii\sniffer\include\archivo.h
+	<fstream>
+	<vector>
+	<iostream>
+	<string>
+	<conio.h>
+
+1615914150 c:\users\anthonysandoval\desktop\s4\estructuradatosii\sniffer\include\cabeceraethernet.h
+	<fstream>
+	<vector>
+	<iostream>
+	<string>
+	<conio.h>
+
+1615914071 source:c:\users\anthonysandoval\desktop\s4\estructuradatosii\sniffer\src\archivo.cpp
+	"Archivo.h"
+
+1615914091 source:c:\users\anthonysandoval\desktop\s4\estructuradatosii\sniffer\src\cabeceraethernet.cpp
+	"CabeceraEthernet.h"
+
+1615914108 source:c:\users\anthonysandoval\desktop\s4\estructuradatosii\sniffer\src\cabeceraipv4.cpp
+	"CabeceraIPv4.h"
+
+1615914164 c:\users\anthonysandoval\desktop\s4\estructuradatosii\sniffer\include\cabeceraipv4.h
+
