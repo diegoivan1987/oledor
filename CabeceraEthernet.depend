@@ -24,3 +24,29 @@
 
 1615911143 c:\users\anthonysandoval\desktop\repos_git\oledor\include\cabeceraipv4.h
 
+1615912145 source:c:\users\usuario\desktop\4 semestre\seminario de redes\oledor\oledor\main.cpp
+	<iostream>
+	<string>
+	<conio.h>
+	"Archivo.h"
+
+1615912297 c:\users\usuario\desktop\4 semestre\seminario de redes\oledor\oledor\include\archivo.h
+	<fstream>
+	<vector>
+	<iostream>
+	<string>
+	<conio.h>
+
+1615912321 source:c:\users\usuario\desktop\4 semestre\seminario de redes\oledor\oledor\src\archivo.cpp
+	"Archivo.h"
+
+1615912387 source:c:\users\usuario\desktop\4 semestre\seminario de redes\oledor\oledor\src\cabeceraethernet.cpp
+	"CabeceraEthernet.h"
+
+1615912368 c:\users\usuario\desktop\4 semestre\seminario de redes\oledor\oledor\include\cabeceraethernet.h
+	<fstream>
+	<vector>
+	<iostream>
+	<string>
+	<conio.h>
+
