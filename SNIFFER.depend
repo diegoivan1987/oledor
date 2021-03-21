@@ -31,3 +31,39 @@
 
 1615914164 c:\users\anthonysandoval\desktop\s4\estructuradatosii\sniffer\include\cabeceraipv4.h
 
+1616301502 source:c:\users\anthonysandoval\desktop\s4\redes\sniffer\src\archivo.cpp
+	"Archivo.h"
+
+1616292738 c:\users\anthonysandoval\desktop\s4\redes\sniffer\include\archivo.h
+	<fstream>
+	<vector>
+	<iostream>
+	<string>
+	<conio.h>
+
+1615914091 source:c:\users\anthonysandoval\desktop\s4\redes\sniffer\src\cabeceraethernet.cpp
+	"CabeceraEthernet.h"
+
+1615914150 c:\users\anthonysandoval\desktop\s4\redes\sniffer\include\cabeceraethernet.h
+	<fstream>
+	<vector>
+	<iostream>
+	<string>
+	<conio.h>
+
+1616302319 source:c:\users\anthonysandoval\desktop\s4\redes\sniffer\src\cabeceraipv4.cpp
+	"CabeceraIPv4.h"
+
+1616301522 c:\users\anthonysandoval\desktop\s4\redes\sniffer\include\cabeceraipv4.h
+	<vector>
+	<string>
+	<iostream>
+
+1616295018 source:c:\users\anthonysandoval\desktop\s4\redes\sniffer\main.cpp
+	<iostream>
+	<string>
+	<conio.h>
+	"Archivo.h"
+	"CabeceraEthernet.h"
+	"CabeceraIPv4.h"
+

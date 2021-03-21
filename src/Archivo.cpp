@@ -1,5 +1,9 @@
 #include "Archivo.h"
 
+Archivo::Archivo()
+{
+
+}
 
 vector<unsigned char> Archivo::leerArchivo(string nomArchivo){
 
@@ -11,7 +15,7 @@ vector<unsigned char> Archivo::leerArchivo(string nomArchivo){
         cout << "Archivo abierto: " << nomArchivo << endl;
         while(getline(miArchivo, linea)){
             for(size_t i = 0; i < linea.size(); i++){
-                printf("%02X ", (unsigned char)linea[i]);
+                //printf("%02X ", (unsigned char)linea[i]);
                 bytes.push_back((unsigned char)linea[i]);
             }
         }
@@ -22,3 +26,7 @@ vector<unsigned char> Archivo::leerArchivo(string nomArchivo){
 
     return bytes;
 }
+
+
+
+
