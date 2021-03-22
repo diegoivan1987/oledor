@@ -1,7 +1,6 @@
 #ifndef CABECERAIPV4_H
 #define CABECERAIPV4_H
 #include <vector>
-#include <string>
 #include <iostream>
 
 using namespace std;

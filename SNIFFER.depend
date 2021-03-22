@@ -67,3 +67,32 @@
 	"CabeceraEthernet.h"
 	"CabeceraIPv4.h"
 
+1616425251 source:c:\users\usuario\desktop\4 semestre\seminario de redes\oledor\main.cpp
+	<iostream>
+	"Archivo.h"
+	"CabeceraEthernet.h"
+	"CabeceraIPv4.h"
+
+1616425229 c:\users\usuario\desktop\4 semestre\seminario de redes\oledor\include\archivo.h
+	<fstream>
+	<vector>
+	<iostream>
+
+1616425229 c:\users\usuario\desktop\4 semestre\seminario de redes\oledor\include\cabeceraethernet.h
+	<fstream>
+	<vector>
+	<iostream>
+
+1616425229 c:\users\usuario\desktop\4 semestre\seminario de redes\oledor\include\cabeceraipv4.h
+	<vector>
+	<iostream>
+
+1616424161 source:c:\users\usuario\desktop\4 semestre\seminario de redes\oledor\src\archivo.cpp
+	"Archivo.h"
+
+1616424161 source:c:\users\usuario\desktop\4 semestre\seminario de redes\oledor\src\cabeceraethernet.cpp
+	"CabeceraEthernet.h"
+
+1616424161 source:c:\users\usuario\desktop\4 semestre\seminario de redes\oledor\src\cabeceraipv4.cpp
+	"CabeceraIPv4.h"
+

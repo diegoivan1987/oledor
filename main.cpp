@@ -1,6 +1,4 @@
 #include <iostream>
-#include <string>
-#include <conio.h>
 #include "Archivo.h"
 #include "CabeceraEthernet.h"
 #include "CabeceraIPv4.h"
@@ -48,7 +46,7 @@ int main()
 
 
 
-    getch();
+    system("pause");
 
     return 0;
 }
