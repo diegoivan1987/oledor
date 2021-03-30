@@ -52,10 +52,12 @@ void CabeceraIPv4::mostrarBinario(string binario)
 {
     int numBytes = 0;
 
-    for(size_t i = 0; i < binario.size(); i++){
+    for(size_t i = 0; i < binario.size(); i++)
+    {
         cout << binario[i];
         numBytes++;
-        if(numBytes == 8){
+        if(numBytes == 8)
+        {
             cout << " ";
             numBytes = 0;
         }
@@ -253,7 +255,6 @@ void CabeceraIPv4::mostrarCabeceraIPv4()
     cout << endl;
     cout << "Direccion IP Origen: " << dirOrigenA[0] << "." << dirOrigenA[1] << "." << dirOrigenA[2] << "." << dirOrigenA[3] << endl;
     cout << "Direccion IP Destino: " << dirDestinoA[0] << "." << dirDestinoA[1] << "." << dirDestinoA[2] << "." << dirDestinoA[3] << endl;
-
 }
 
 void CabeceraIPv4::tipoServicioDesglose_3(string bits)
@@ -378,6 +379,7 @@ void CabeceraIPv4::setProtocolo(int dato)
     }
 }
 
-
-
-
+string CabeceraIPv4::getProtocol()
+{
+    return protocolo;
+}

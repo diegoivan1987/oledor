@@ -2,6 +2,7 @@
 #include "archivo.h"
 #include "cabeceraEthernet.h"
 #include "cabeceraIPv4.h"
+#include "cabeceraICMPv4.h"
 
 using namespace std;
 
@@ -11,7 +12,7 @@ int main()
     CabeceraEthernet ce;
     vector<unsigned char> bytes;
 
-    bytes = archivo.leerArchivo("ethernet_ipv4_udp_dns.bin");
+    bytes = archivo.leerArchivo("ethernet_ipv4_icmp_host_unreachable.bin");
 
     if(bytes.size() != 0)
     {
@@ -35,6 +36,18 @@ int main()
             binario = c4.toBinary(bytes);
             c4.setCabeceraIPv4(binario);
             c4.mostrarCabeceraIPv4();
+            cout << endl;
+
+            if (c4.getProtocol() == "ICMPv4")
+            {
+                CabeceraICMPv4 headerICMPv4;
+                string data;
+
+                data = headerICMPv4.toBinary(bytes);
+                headerICMPv4.setICMPv4Header(data);
+                headerICMPv4.showICMPv4Header();
+            }
+            
         }
     }
     else

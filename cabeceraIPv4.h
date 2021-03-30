@@ -33,6 +33,7 @@ class CabeceraIPv4
         void tipoServicioDesglose_5(string bits);
         void flags(string bits);
         void setProtocolo(int dato);
+        string getProtocol();
 };
 
 #endif // CABECERAIPV4_H
