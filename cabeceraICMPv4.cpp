@@ -87,6 +87,68 @@ string CabeceraICMPv4::messageType(int type)
     }
 }
 
+string CabeceraICMPv4::errorType(int type)
+{
+    switch (type)
+    {
+    case 0:
+        return "No se puede llegar a la red.";
+        break;
+
+    case 1:
+        return "No se puede llegar al host o aplicacion de destino.";
+        break;
+
+    case 2:
+        return "El destino no dispone del protocolo solicitado.";
+        break;
+
+    case 3:
+        return "No se puede llegar al puerto de destino o la aplicacion de destino no esta libre";
+        break;
+    
+    case 4:
+        return "Se necesita aplicar fragmentacion, pero el flag correspondiente indica lo contrario.";
+        break;
+
+    case 5:
+        return "La ruta de origen no es correcta.";
+        break;
+
+    case 6:
+        return "No se conoce la red de destino.";
+        break;
+
+    case 7:
+        return "No se conoce el host de destino.";
+        break;
+
+    case 8:
+        return "El host de origen esta aislado.";
+        break;
+
+    case 9:
+        return "La comunicacion con la red de destino esta prohibida por razones administrativas.";
+        break;
+
+    case 10:
+        return "La comunicacion con el host de destino esta prohibida por razones administrativas.";
+        break;
+
+    case 11:
+        return "No se puede llegar a la red de destino debido al tipo de servicio.";
+        break;
+
+    case 12:
+        return "No se puede llegar al host de destino debido al tipo de servicio.";
+        break;
+    
+    default:
+        return "Error desconocido.";
+        break;
+    }
+}
+
 void CabeceraICMPv4::setICMPv4Header(string data)
 {
     //La cabecera comienza en el bit 272
@@ -100,12 +162,23 @@ void CabeceraICMPv4::setICMPv4Header(string data)
         type_str += data[i];
         bit++;
     }
-    
+
     type = binaryToDecimal(type_str);
+
+    //Codigos de error - 8 bits - Decimal
+    string error;
+    for (size_t i = bit; i <= 287; i++)
+    {
+        error += data[i];
+        bit++;
+    }
+    
+    error_code = binaryToDecimal(error);
 }
 
 void CabeceraICMPv4::showICMPv4Header()
 {
     cout << "       Cabecera ICMPv4" << endl;
-    cout << "Tipo de mensaje informativo: " << type << " - " << messageType(type);
+    cout << "Tipo de mensaje informativo: " << type << " - " << messageType(type) << endl;
+    cout << "Codigo de error: " << error_code << " - " << errorType(error_code) << endl;
 }

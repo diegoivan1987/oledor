@@ -10,7 +10,7 @@ class CabeceraICMPv4
 {
 private:
     int type;
-    int code;
+    int error_code;
     int checksum;
 
 public:
@@ -21,6 +21,7 @@ public:
     int binaryToDecimal(string number);
     void setICMPv4Header(string data);
     string messageType(int type);
+    string errorType(int code);
     void showICMPv4Header();
 };
 
