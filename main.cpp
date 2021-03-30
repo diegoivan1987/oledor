@@ -12,27 +12,22 @@ int main()
     CabeceraEthernet ce;
     vector<unsigned char> bytes;
 
-    bytes = archivo.leerArchivo("ethernet_ipv4_icmp_network_unreachable.bin");
-
-    for (size_t i = 0; i < bytes.size(); i++)
-    {
-        printf("%02X  ", bytes[i]);
-    }
-    
+    bytes = archivo.leerArchivo("ethernet_ipv4_icmp_host_unreachable.bin");
 
     if(bytes.size() != 0)
     {
         ce.setCabecera(bytes);
 
-        cout << endl << "Direccion Destino: ";
+        cout <<  endl << "       Cabecera Ethernet" << endl;
+        cout << "Direccion Destino: ";
         ce.mostrarCampo(ce.getDirDestino());
-        cout << endl << "Direccion Origen: ";
+        cout << "Direccion Origen: ";
         ce.mostrarCampo(ce.getDirOrigen());
-        cout << endl << "Tipo: ";
+        cout << "Tipo: ";
         ce.mostrarCampo(ce.getTipo_Long());
 
         ce.setTipo(ce.getTipo_Long());
-        cout << " - " << ce.getTipo() << endl;
+        cout << " - " << ce.getTipo() << endl << endl;
 
         if(ce.getTipo() == "IPv4")
         {

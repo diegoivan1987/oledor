@@ -214,8 +214,10 @@ void CabeceraIPv4::setCabeceraIPv4(string bin)
 void CabeceraIPv4::mostrarCabeceraIPv4()
 {
 
+    cout << "       Cabecera IPv4" << endl;
     cout << "Version: " << versionI << " (IPv4)" << endl;
-    cout << "Tama�o Cabecera: " << cabeceraI << " Palabras, " << cabeceraI*32 << " bits" << endl << endl;
+    printf("Tama%co de la Cabecera: ", 164);
+    cout << cabeceraI << " Palabras, " << cabeceraI*32 << " bits" << endl << endl;
 
     //Tipo de servicio***
     cout << "Tipo de Servicio: " << endl;
