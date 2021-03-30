@@ -172,8 +172,18 @@ void CabeceraICMPv4::setICMPv4Header(string data)
         error += data[i];
         bit++;
     }
-    
+
     error_code = binaryToDecimal(error);
+
+    //Checksum - 16 bits - Hexadecimal
+    string checksum_str;
+    for (size_t i = bit; i <= 303; i++)
+    {
+        checksum_str += data[i];
+        bit++;
+    }
+
+    checksum = binaryToDecimal(checksum_str);
 }
 
 void CabeceraICMPv4::showICMPv4Header()
@@ -181,4 +191,5 @@ void CabeceraICMPv4::showICMPv4Header()
     cout << "       Cabecera ICMPv4" << endl;
     cout << "Tipo de mensaje informativo: " << type << " - " << messageType(type) << endl;
     cout << "Codigo de error: " << error_code << " - " << errorType(error_code) << endl;
+    printf("Checksum: %02X\n", checksum);
 }
