@@ -11,12 +11,9 @@ class Archivo{
         vector<unsigned char> bytes;
         unsigned char c;
 
-
     public:
         vector<unsigned char> leerArchivo(string nomArchivo);
         Archivo();
-
-
 };
 
 #endif // ARCHIVO_H
