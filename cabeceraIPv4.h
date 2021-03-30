@@ -8,7 +8,6 @@ using namespace std;
 class CabeceraIPv4
 {
     private:
-
         int versionI;
         int cabeceraI;
         string tipoServicioS;
@@ -36,4 +35,4 @@ class CabeceraIPv4
         void setProtocolo(int dato);
 };
 
-#endif
+#endif // CABECERAIPV4_H

@@ -26,25 +26,24 @@ int main()
 
         ce.setTipo(ce.getTipo_Long());
         cout << " - " << ce.getTipo() << endl;
+
+        if(ce.getTipo() == "IPv4")
+        {
+            CabeceraIPv4 c4;
+            string binario;
+
+            binario = c4.toBinary(bytes);
+            c4.setCabeceraIPv4(binario);
+            c4.mostrarCabeceraIPv4();
+        }
     }
     else
     {
         cout << "Imposible establecer la cabecera Ethernet" << endl;
     }
+
     cout << endl;
-
-
-    if(ce.getTipo() == "IPv4")
-    {
-        CabeceraIPv4 c4;
-        string binario;
-
-        binario = c4.toBinary(bytes);
-        //c4.mostrarBinario(binario);
-        c4.setCabeceraIPv4(binario);
-        c4.mostrarCabeceraIPv4();
-    }
-
+    cout << endl;
     system("pause");
 
     return 0;
