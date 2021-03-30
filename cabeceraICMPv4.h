@@ -20,6 +20,7 @@ public:
     string toBinary(vector<unsigned char> bytes);
     int binaryToDecimal(string number);
     void setICMPv4Header(string data);
+    string messageType(int type);
     void showICMPv4Header();
 };
 

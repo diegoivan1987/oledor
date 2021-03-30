@@ -12,7 +12,13 @@ int main()
     CabeceraEthernet ce;
     vector<unsigned char> bytes;
 
-    bytes = archivo.leerArchivo("ethernet_ipv4_icmp_host_unreachable.bin");
+    bytes = archivo.leerArchivo("ethernet_ipv4_icmp_redirect.bin");
+
+    for (size_t i = 0; i < bytes.size(); i++)
+    {
+        printf("%02X  ", bytes[i]);
+    }
+    
 
     if(bytes.size() != 0)
     {
