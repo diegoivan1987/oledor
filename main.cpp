@@ -1,10 +1,10 @@
 #include <iostream>
-#include "Archivo.h"
-#include "CabeceraEthernet.h"
-#include "CabeceraIPv4.h"
-
+#include "archivo.h"
+#include "cabeceraEthernet.h"
+#include "cabeceraIPv4.h"
 
 using namespace std;
+
 int main()
 {
     Archivo archivo;
