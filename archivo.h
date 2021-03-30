@@ -5,7 +5,8 @@
 #include <iostream>
 
 using namespace std;
-class Archivo{
+class Archivo
+{
     private:
         FILE *archivo;
         vector<unsigned char> bytes;

@@ -13,10 +13,11 @@ int main()
 
     bytes = archivo.leerArchivo("ethernet_ipv4_udp_dns.bin");
 
-    if(bytes.size() != 0){
+    if(bytes.size() != 0)
+    {
         ce.setCabecera(bytes);
 
-        cout << endl << endl << "Direccion Destino: ";
+        cout << endl << "Direccion Destino: ";
         ce.mostrarCampo(ce.getDirDestino());
         cout << endl << "Direccion Origen: ";
         ce.mostrarCampo(ce.getDirOrigen());
@@ -24,14 +25,17 @@ int main()
         ce.mostrarCampo(ce.getTipo_Long());
 
         ce.setTipo(ce.getTipo_Long());
-        cout << "   *" << ce.getTipo() << endl;
-    }else{
+        cout << " - " << ce.getTipo() << endl;
+    }
+    else
+    {
         cout << "Imposible establecer la cabecera Ethernet" << endl;
     }
     cout << endl;
 
 
-    if(ce.getTipo() == "IPv4"){
+    if(ce.getTipo() == "IPv4")
+    {
         CabeceraIPv4 c4;
         string binario;
 
@@ -39,12 +43,7 @@ int main()
         //c4.mostrarBinario(binario);
         c4.setCabeceraIPv4(binario);
         c4.mostrarCabeceraIPv4();
-
-
-
     }
-
-
 
     system("pause");
 
