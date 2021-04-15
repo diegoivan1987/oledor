@@ -4,6 +4,7 @@
 #include "cabeceraIPv4.h"
 #include "cabeceraICMPv4.h"
 #include "cabeceraARP.h"
+#include "cabeceraRARP.h"
 
 using namespace std;
 
@@ -13,7 +14,7 @@ int main()
     CabeceraEthernet ce;
     vector<unsigned char> bytes;
 
-    bytes = archivo.leerArchivo("ethernet_arp_reply.bin");
+    bytes = archivo.leerArchivo("ethernet_arp_request.bin");
 
     if(bytes.size() != 0)
     {
@@ -61,6 +62,16 @@ int main()
             headerARP.setARPHeader(data);
             headerARP.showARPHeader();
 
+        }
+
+        if (ce.getTipo() == "RARP")
+        {
+            RARP headerRARP;
+            string data;
+
+            data = headerRARP.toBinary(bytes);
+            headerRARP.setRARPHeader(data);
+            headerRARP.showRARPHeader();
         }
         
     }
