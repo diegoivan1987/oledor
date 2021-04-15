@@ -26,6 +26,7 @@ public:
     int binaryToDecimal(string number);
     string hardwareType(int type);
     string protocolType(int type);
+    string opCode(int type);
     void setARPHeader(string data);
     void showARPHeader();
 };

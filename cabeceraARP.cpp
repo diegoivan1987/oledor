@@ -98,6 +98,52 @@ string ARP::protocolType(int type)
     }
 }
 
+string ARP::opCode(int type)
+{
+    switch (type)
+    {
+    case 1:
+        return "ARP Request";
+        break;
+
+    case 2:
+        return "ARP Reply";
+        break;
+
+    case 3:
+        return "RARP Request";
+        break;
+
+    case 4:
+        return "RARP Reply";
+        break;
+
+    case 5:
+        return "DRARP Request";
+        break;
+
+    case 6:
+        return "DRARP Reply";
+        break;
+
+    case 7:
+        return "DRARP Error";
+        break;
+
+    case 8:
+        return "InARP Request";
+        break;
+
+    case 9:
+        return "InARP Reply";
+        break;
+    
+    default:
+        return "Tipo desconocido.";
+        break;
+    }
+}
+
 //Procedimiento
 void ARP::setARPHeader(string data)
 {
@@ -147,6 +193,17 @@ void ARP::setARPHeader(string data)
     }
 
     protocol_address_length = binaryToDecimal(protocol_length);
+
+    //codigo de operacion - 16 bits - Decimal
+    string op_code_str;
+    
+    for (int i = bit; i <= 175; i++)
+    {
+        op_code_str += data[i];
+        bit++;
+    }
+
+    opcode = binaryToDecimal(op_code_str);
 }
 
 void ARP::showARPHeader()
@@ -157,4 +214,5 @@ void ARP::showARPHeader()
     cout << " - " << protocolType(protocol_type) << endl;
     cout << "Longitud de la direccion de hardware: " << hardware_address_length << " bytes" << endl;
     cout << "Longitud de la direccion de protocolo: " << protocol_address_length << " bytes" << endl;
+    cout << "Codigo de operacion: " << opcode << " - " << opCode(opcode) << endl;
 }
