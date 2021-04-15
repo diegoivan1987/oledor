@@ -194,7 +194,7 @@ void ARP::setARPHeader(string data)
 
     protocol_address_length = binaryToDecimal(protocol_length);
 
-    //codigo de operacion - 16 bits - Decimal
+    //Codigo de operacion - 16 bits - Decimal
     string op_code_str;
     
     for (int i = bit; i <= 175; i++)
@@ -204,6 +204,108 @@ void ARP::setARPHeader(string data)
     }
 
     opcode = binaryToDecimal(op_code_str);
+
+    //Direccion MAC del emisor - 48 bits - Hexadecimal
+    string mac_source_1, mac_source_2, mac_source_3, mac_source_4, mac_source_5, mac_source_6;
+
+    for (int i = bit; i <= 183; i++)
+    {
+        mac_source_1 += data[i];
+        bit++;
+    }
+
+    mac_source[0] = binaryToDecimal(mac_source_1);
+
+    for (int i = bit; i <= 191; i++)
+    {
+        mac_source_2 += data[i];
+        bit++;
+    }
+
+    mac_source[1] = binaryToDecimal(mac_source_2);
+
+    for (int i = bit; i <= 199; i++)
+    {
+        mac_source_3 += data[i];
+        bit++;
+    }
+
+    mac_source[2] = binaryToDecimal(mac_source_3);
+    
+    for (int i = bit; i <= 207; i++)
+    {
+        mac_source_4 += data[i];
+        bit++;
+    }
+
+    mac_source[3] = binaryToDecimal(mac_source_4);
+
+    for (int i = bit; i <= 215; i++)
+    {
+        mac_source_5 += data[i];
+        bit++;
+    }
+
+    mac_source[4] = binaryToDecimal(mac_source_5);
+
+    for (int i = bit; i <= 223; i++)
+    {
+        mac_source_6 += data[i];
+        bit++;
+    }
+
+    mac_source[5] = binaryToDecimal(mac_source_6);
+
+    //Direccion MAC del receptor - 48 bits - Hexadecimal
+    string mac_destination_1, mac_destination_2, mac_destination_3, mac_destination_4, mac_destination_5, mac_destination_6;
+
+    for (int i = bit; i <= 231; i++)
+    {
+        mac_destination_1 += data[i];
+        bit++;
+    }
+
+    mac_destination[0] = binaryToDecimal(mac_destination_1);
+
+    for (int i = bit; i <= 239; i++)
+    {
+        mac_destination_2 += data[i];
+        bit++;
+    }
+
+    mac_destination[1] = binaryToDecimal(mac_destination_2);
+
+    for (int i = bit; i <= 247; i++)
+    {
+        mac_destination_3 += data[i];
+        bit++;
+    }
+
+    mac_destination[2] = binaryToDecimal(mac_destination_3);
+    
+    for (int i = bit; i <= 255; i++)
+    {
+        mac_destination_4 += data[i];
+        bit++;
+    }
+
+    mac_destination[3] = binaryToDecimal(mac_destination_4);
+
+    for (int i = bit; i <= 263; i++)
+    {
+        mac_destination_5 += data[i];
+        bit++;
+    }
+
+    mac_destination[4] = binaryToDecimal(mac_destination_5);
+
+    for (int i = bit; i <= 271; i++)
+    {
+        mac_destination_6 += data[i];
+        bit++;
+    }
+
+    mac_destination[5] = binaryToDecimal(mac_destination_6);
 }
 
 void ARP::showARPHeader()
@@ -215,4 +317,6 @@ void ARP::showARPHeader()
     cout << "Longitud de la direccion de hardware: " << hardware_address_length << " bytes" << endl;
     cout << "Longitud de la direccion de protocolo: " << protocol_address_length << " bytes" << endl;
     cout << "Codigo de operacion: " << opcode << " - " << opCode(opcode) << endl;
+    printf("Direccion de hardware del emisor: %02X:%02X:%02X:%02X:%02X:%02X\n", mac_source[0], mac_source[1], mac_source[2], mac_source[3], mac_source[4], mac_source[5]);
+    printf("Direccion de hardware del Receptor: %02X:%02X:%02X:%02X:%02X:%02X\n", mac_destination[0], mac_destination[1], mac_destination[2], mac_destination[3], mac_destination[4], mac_destination[5]);
 }
