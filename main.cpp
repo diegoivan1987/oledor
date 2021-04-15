@@ -3,6 +3,7 @@
 #include "cabeceraEthernet.h"
 #include "cabeceraIPv4.h"
 #include "cabeceraICMPv4.h"
+#include "cabeceraARP.h"
 
 using namespace std;
 
@@ -12,7 +13,7 @@ int main()
     CabeceraEthernet ce;
     vector<unsigned char> bytes;
 
-    bytes = archivo.leerArchivo("ethernet_ipv4_icmp_host_unreachable.bin");
+    bytes = archivo.leerArchivo("ethernet_arp_reply.bin");
 
     if(bytes.size() != 0)
     {
@@ -50,6 +51,18 @@ int main()
             }
             
         }
+
+        if (ce.getTipo() == "ARP")
+        {
+            ARP headerARP;
+            string data;
+
+            data = headerARP.toBinary(bytes);
+            headerARP.setARPHeader(data);
+            headerARP.showARPHeader();
+
+        }
+        
     }
     else
     {
