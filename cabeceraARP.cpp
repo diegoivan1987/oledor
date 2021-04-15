@@ -72,6 +72,32 @@ string ARP::hardwareType(int type)
     }
 }
 
+string ARP::protocolType(int type)
+{
+    switch (type)
+    {
+    case 2048:
+        return "IPv4";
+        break;
+
+    case 2054:
+        return "ARP";
+        break;
+
+    case 32821:
+        return "RARP";
+        break;
+
+    case 34525:
+        return "IPv6";
+        break;
+    
+    default:
+        return "Tipo desconocido";
+        break;
+    }
+}
+
 //Procedimiento
 void ARP::setARPHeader(string data)
 {
@@ -88,10 +114,23 @@ void ARP::setARPHeader(string data)
     }
 
     hardware_type = binaryToDecimal(hw_type);
+
+    //Tipo de protocolo - 16 bits - Hexadecimal
+    string protocol;
+
+    for (int i = bit; i <= 143; i++)
+    {
+        protocol += data[i];
+        bit++;
+    }
+
+    protocol_type = binaryToDecimal(protocol);
 }
 
 void ARP::showARPHeader()
 {
     cout << "       Cabecera ICMPv4" << endl;
     cout << "Tipo de hardware: " << hardware_type << " - " << hardwareType(hardware_type) << endl;
+    printf("Tipo de protocolo: %02X", protocol_type);
+    cout << " - " << protocolType(protocol_type) << endl;
 }
