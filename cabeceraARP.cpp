@@ -125,6 +125,17 @@ void ARP::setARPHeader(string data)
     }
 
     protocol_type = binaryToDecimal(protocol);
+
+    //Longitud de direccion de hardware - 8 bits - Decimal
+    string hw_length;
+
+    for (int i = bit; i <= 151; i++)
+    {
+        hw_length += data[i];
+        bit++;
+    }
+
+    hardware_address_length = binaryToDecimal(hw_length);
 }
 
 void ARP::showARPHeader()
@@ -133,4 +144,5 @@ void ARP::showARPHeader()
     cout << "Tipo de hardware: " << hardware_type << " - " << hardwareType(hardware_type) << endl;
     printf("Tipo de protocolo: %02X", protocol_type);
     cout << " - " << protocolType(protocol_type) << endl;
+    cout << "Longitud de la direccion de hardware: " << hardware_address_length << " bytes" << endl;
 }
