@@ -25,6 +25,7 @@ public:
     string toBinary(vector<unsigned char> bytes);
     int binaryToDecimal(string number);
     string hardwareType(int type);
+    string protocolType(int type);
     void setARPHeader(string data);
     void showARPHeader();
 };
