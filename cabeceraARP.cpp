@@ -306,6 +306,76 @@ void ARP::setARPHeader(string data)
     }
 
     mac_destination[5] = binaryToDecimal(mac_destination_6);
+
+    //Direccion IP del emisor - 32 bits - Decimal
+    string ip_source_1, ip_source_2, ip_source_3, ip_source_4;
+
+    for (int i = bit; i <= 279; i++)
+    {
+        ip_source_1 += data[i];
+        bit++;
+    }
+
+    ip_source[0] = binaryToDecimal(ip_source_1);
+
+    for (int i = bit; i <= 287; i++)
+    {
+        ip_source_2 += data[i];
+        bit++;
+    }
+
+    ip_source[1] = binaryToDecimal(ip_source_2);
+
+    for (int i = bit; i <= 295; i++)
+    {
+        ip_source_3 += data[i];
+        bit++;
+    }
+
+    ip_source[2] = binaryToDecimal(ip_source_3);
+
+    for (int i = bit; i <= 303; i++)
+    {
+        ip_source_4 += data[i];
+        bit++;
+    }
+
+    ip_source[3] = binaryToDecimal(ip_source_4);
+
+    //Direccion IP del receptor - 32 bits - Decimal
+    string ip_destination_1, ip_destination_2, ip_destination_3, ip_destination_4;
+
+    for (int i = bit; i <= 311; i++)
+    {
+        ip_destination_1 += data[i];
+        bit++;
+    }
+
+    ip_destination[0] = binaryToDecimal(ip_destination_1);
+
+    for (int i = bit; i <= 319; i++)
+    {
+        ip_destination_2 += data[i];
+        bit++;
+    }
+
+    ip_destination[1] = binaryToDecimal(ip_destination_2);
+
+    for (int i = bit; i <= 327; i++)
+    {
+        ip_destination_3 += data[i];
+        bit++;
+    }
+
+    ip_destination[2] = binaryToDecimal(ip_destination_3);
+
+    for (int i = bit; i <= 335; i++)
+    {
+        ip_destination_4 += data[i];
+        bit++;
+    }
+
+    ip_destination[3] = binaryToDecimal(ip_destination_4);
 }
 
 void ARP::showARPHeader()
@@ -319,4 +389,6 @@ void ARP::showARPHeader()
     cout << "Codigo de operacion: " << opcode << " - " << opCode(opcode) << endl;
     printf("Direccion de hardware del emisor: %02X:%02X:%02X:%02X:%02X:%02X\n", mac_source[0], mac_source[1], mac_source[2], mac_source[3], mac_source[4], mac_source[5]);
     printf("Direccion de hardware del Receptor: %02X:%02X:%02X:%02X:%02X:%02X\n", mac_destination[0], mac_destination[1], mac_destination[2], mac_destination[3], mac_destination[4], mac_destination[5]);
+    cout << "Direccion IP del emisor: " << ip_source[0] << "." << ip_source[1] << "." << ip_source[2] << "." << ip_source[3] << endl;
+    cout << "Direccion IP del receptor: " << ip_destination[0] << "." << ip_destination[1] << "." << ip_destination[2] << "." << ip_destination[3] << endl;
 }
