@@ -7,21 +7,12 @@ CabeceraIPv4::CabeceraIPv4()
 
 int CabeceraIPv4::binToDecimal(string numero)
 {
-    char temp[2];
-    int potencia[17]={1,2,4,8,16,32,64,128,256,512,1024,2048,4096,8192,16384,32768};
-    int i,x,total=0,decimal[17];
+    int total;
 
-    for(i=0;numero[i]!='\0';i++);
-    int limite=i;
-    i--;
-    for(x=0;x<limite;x++,i--){
-        temp[0]=numero[i];
-        decimal[x]=atoi(temp);
-        decimal[x]*=potencia[x];
-        total+=decimal[x];
-    }
-    //printf("\nresultado en decimal: %d",total);
-    //printf("\nresultado en hexadecimal: %x",total);
+    //Con la funcion stoull se hace la conversion de binario a decimal
+    //Los argumentos son stoull(<string en binario>, <0>, <base a convertir>)
+    total = stoull(numero, 0, 2);
+
     return total;
 }
 

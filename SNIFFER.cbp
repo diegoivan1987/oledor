@@ -38,11 +38,15 @@
 		<Unit filename="include/CabeceraEthernet.h" />
 		<Unit filename="include/CabeceraIPv4.h" />
 		<Unit filename="include/ICMPv4.h" />
+		<Unit filename="include/cabeceraARP.h" />
+		<Unit filename="include/cabeceraRARP.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/Archivo.cpp" />
 		<Unit filename="src/CabeceraEthernet.cpp" />
 		<Unit filename="src/CabeceraIPv4.cpp" />
 		<Unit filename="src/ICMPv4.cpp" />
+		<Unit filename="src/cabeceraARP.cpp" />
+		<Unit filename="src/cabeceraRARP.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />
