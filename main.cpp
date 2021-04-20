@@ -15,7 +15,7 @@ int main()
     CabeceraEthernet ce;
     vector<unsigned char> bytes;
 
-    bytes = archivo.leerArchivo("ethernet_ipv6_nd.bin");
+    bytes = archivo.leerArchivo("ipv6_icmpv6_ping.bin");
 
     if(bytes.size() != 0)
     {

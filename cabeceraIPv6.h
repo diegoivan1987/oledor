@@ -10,7 +10,7 @@ class IPv6
 {
 private:
     int version;
-    int traffic_class;
+    string traffic_class;
     int flow_label;
     int payload_length;
     int next_header;
@@ -22,6 +22,8 @@ public:
     ~IPv6();
     string toBinary(vector<unsigned char> bytes);
     int binaryToDecimal(string number);
+    string trafficClassPriority(string bits);
+    void trafficClassFeatures(string bits);
     void setIPv6Header(string data);
     void showIPv6Header();
 };
