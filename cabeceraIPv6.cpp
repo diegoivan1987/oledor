@@ -208,6 +208,168 @@ void IPv6::setIPv6Header(string data)
     }
     
     hop_limit = binaryToDecimal(ipv6_hopLimit);
+
+    //Direccion de origen - 128 bits - Hexadecimal
+    string ipv6_source_aux;
+
+    //1er byte
+    for (size_t i = bit; i <= 183; i++)
+    {
+        ipv6_source_aux += data[i];
+        bit++;
+    }
+
+    source_address[0] = binaryToDecimal(ipv6_source_aux);
+    
+    //2do byte
+    ipv6_source_aux = "";
+    for (size_t i = bit; i <= 191; i++)
+    {
+        ipv6_source_aux += data[i];
+        bit++;
+    }
+
+    source_address[1] = binaryToDecimal(ipv6_source_aux);
+
+    //3er byte
+    ipv6_source_aux = "";
+    for (size_t i = bit; i <= 199; i++)
+    {
+        ipv6_source_aux += data[i];
+        bit++;
+    }
+
+    source_address[2] = binaryToDecimal(ipv6_source_aux);
+
+    //4to byte
+    ipv6_source_aux = "";
+    for (size_t i = bit; i <= 207; i++)
+    {
+        ipv6_source_aux += data[i];
+        bit++;
+    }
+
+    source_address[3] = binaryToDecimal(ipv6_source_aux);
+
+    //5to byte
+    ipv6_source_aux = "";
+    for (size_t i = bit; i <= 215; i++)
+    {
+        ipv6_source_aux += data[i];
+        bit++;
+    }
+
+    source_address[4] = binaryToDecimal(ipv6_source_aux);
+
+    //6to byte
+    ipv6_source_aux = "";
+    for (size_t i = bit; i <= 223; i++)
+    {
+        ipv6_source_aux += data[i];
+        bit++;
+    }
+
+    source_address[5] = binaryToDecimal(ipv6_source_aux);
+
+    //7mo byte
+    ipv6_source_aux = "";
+    for (size_t i = bit; i <= 231; i++)
+    {
+        ipv6_source_aux += data[i];
+        bit++;
+    }
+
+    source_address[6] = binaryToDecimal(ipv6_source_aux);
+
+    //8vo byte
+    ipv6_source_aux = "";
+    for (size_t i = bit; i <= 239; i++)
+    {
+        ipv6_source_aux += data[i];
+        bit++;
+    }
+
+    source_address[7] = binaryToDecimal(ipv6_source_aux);
+
+    //9
+    ipv6_source_aux = "";
+    for (size_t i = bit; i <= 247; i++)
+    {
+        ipv6_source_aux += data[i];
+        bit++;
+    }
+
+    source_address[8] = binaryToDecimal(ipv6_source_aux);
+
+    //10
+    ipv6_source_aux = "";
+    for (size_t i = bit; i <= 255; i++)
+    {
+        ipv6_source_aux += data[i];
+        bit++;
+    }
+
+    source_address[9] = binaryToDecimal(ipv6_source_aux);
+
+    //11
+    ipv6_source_aux = "";
+    for (size_t i = bit; i <= 263; i++)
+    {
+        ipv6_source_aux += data[i];
+        bit++;
+    }
+
+    source_address[10] = binaryToDecimal(ipv6_source_aux);
+
+    //12
+    ipv6_source_aux = "";
+    for (size_t i = bit; i <= 271; i++)
+    {
+        ipv6_source_aux += data[i];
+        bit++;
+    }
+
+    source_address[11] = binaryToDecimal(ipv6_source_aux);
+
+    //13
+    ipv6_source_aux = "";
+    for (size_t i = bit; i <= 279; i++)
+    {
+        ipv6_source_aux += data[i];
+        bit++;
+    }
+
+    source_address[12] = binaryToDecimal(ipv6_source_aux);
+
+    //14
+    ipv6_source_aux = "";
+    for (size_t i = bit; i <= 287; i++)
+    {
+        ipv6_source_aux += data[i];
+        bit++;
+    }
+
+    source_address[13] = binaryToDecimal(ipv6_source_aux);
+
+    //15
+    ipv6_source_aux = "";
+    for (size_t i = bit; i <= 295; i++)
+    {
+        ipv6_source_aux += data[i];
+        bit++;
+    }
+
+    source_address[14] = binaryToDecimal(ipv6_source_aux);
+
+    //16
+    ipv6_source_aux = "";
+    for (size_t i = bit; i <= 303; i++)
+    {
+        ipv6_source_aux += data[i];
+        bit++;
+    }
+
+    source_address[15] = binaryToDecimal(ipv6_source_aux);
 }
 
 void IPv6::showIPv6Header()
@@ -235,4 +397,8 @@ void IPv6::showIPv6Header()
     cout << "Longitud de datos: " << payload_length << " bytes" << endl;
     cout << "Encabezado siguiente: " << nextHeader(next_header) << endl;
     cout << "Limite de salto: " << hop_limit << endl;
+    printf("Direccion de origen: %02X%02X:%02X%02X:%02X%02X:%02X%02X:%02X%02X:%02X%02X:%02X%02X:%02X%02X\n",
+            source_address[0], source_address[1], source_address[2], source_address[3], source_address[4],
+            source_address[5], source_address[6], source_address[7], source_address[8], source_address[9],
+            source_address[10], source_address[11], source_address[12], source_address[13], source_address[14], source_address[15]);
 }
