@@ -107,6 +107,40 @@ void IPv6::trafficClassFeatures(string bits)
     }
 }
 
+string IPv6::nextHeader(int next)
+{
+    switch(next)
+    {
+        case 1: 
+            return "ICMPv4"; 
+            break;
+
+        case 6: 
+            return "TCP"; 
+            break;
+
+        case 17: 
+            return "UDP"; 
+            break;
+
+        case 58: 
+            return "ICMPv6"; 
+            break;
+
+        case 118: 
+            return "STP"; 
+            break;
+
+        case 121: 
+            return "SMP"; 
+            break;
+
+        default: 
+            return "Valor no encontrado";
+            break;
+    }
+}
+
 //Procedimiento
 void IPv6::setIPv6Header(string data)
 {
@@ -141,6 +175,28 @@ void IPv6::setIPv6Header(string data)
     }
     
     flow_label = binaryToDecimal(ipv6_flowLabel);
+
+    //Tamaño de datos - 16 bits - Decimal
+    string ipv6_payloadLength;
+
+    for (size_t i = bit; i <= 159; i++)
+    {
+        ipv6_payloadLength += data[i];
+        bit++;
+    }
+
+    payload_length = binaryToDecimal(ipv6_payloadLength);
+
+    //Encabezado siguiente - 8 bits - Decimal
+    string ipv6_nextHeader;
+
+    for (size_t i = bit; i <= 167; i++)
+    {
+        ipv6_nextHeader += data[i];
+        bit++;
+    }
+
+    next_header = binaryToDecimal(ipv6_nextHeader);
 }
 
 void IPv6::showIPv6Header()
@@ -165,4 +221,7 @@ void IPv6::showIPv6Header()
     cout << "Caracteristicas del servicio: " << endl;
     trafficClassFeatures(features);
     cout << "Etiqueta de flujo: " << flow_label << endl;
+    cout << "Longitud de datos: " << payload_length << " bytes" << endl;
+    cout << "Encabezado siguiente: " << nextHeader(next_header) << endl;
+
 }

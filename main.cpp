@@ -15,7 +15,7 @@ int main()
     CabeceraEthernet ce;
     vector<unsigned char> bytes;
 
-    bytes = archivo.leerArchivo("ipv6_nd_sol_2.bin");
+    bytes = archivo.leerArchivo("ipv6_nd_router_adv.bin");
 
     if(bytes.size() != 0)
     {
