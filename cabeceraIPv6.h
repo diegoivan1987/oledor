@@ -17,7 +17,6 @@ private:
     unsigned int hop_limit;
     int source_address[16];
     int destination_address[16];
-    int size;
 public:
     IPv6();
     ~IPv6();
@@ -28,7 +27,6 @@ public:
     string nextHeader(int next);
     void setIPv6Header(string data);
     void showIPv6Header();
-    int getBitSize();
 };
 
 #endif // IPV6_H

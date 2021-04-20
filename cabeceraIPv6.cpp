@@ -5,11 +5,6 @@ IPv6::IPv6() { }
 
 IPv6::~IPv6() { }
 
-int IPv6::getBitSize()
-{
-    return size;
-}
-
 //Conversiones
 string IPv6::toBinary(vector<unsigned char> bytes)
 {
