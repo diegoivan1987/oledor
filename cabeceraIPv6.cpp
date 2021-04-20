@@ -130,6 +130,17 @@ void IPv6::setIPv6Header(string data)
         traffic_class += data[i];
         bit++;
     }
+
+    //Etiqueta de flujo - 20 bits - decimal
+    string ipv6_flowLabel;
+    
+    for (size_t i = bit; i <= 143; i++)
+    {
+        ipv6_flowLabel += data[i];
+        bit++;
+    }
+    
+    flow_label = binaryToDecimal(ipv6_flowLabel);
 }
 
 void IPv6::showIPv6Header()
@@ -149,8 +160,9 @@ void IPv6::showIPv6Header()
             features += traffic_class[i];
         }
     }
-    
+
     cout << "Prioridad: " <<  priority << " - "  << trafficClassPriority(priority) << endl;
     cout << "Caracteristicas del servicio: " << endl;
     trafficClassFeatures(features);
+    cout << "Etiqueta de flujo: " << flow_label << endl;
 }
