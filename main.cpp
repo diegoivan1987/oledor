@@ -15,7 +15,7 @@ int main()
     CabeceraEthernet ce;
     vector<unsigned char> bytes;
 
-    bytes = archivo.leerArchivo("ipv6_nd_sol_2.bin");
+    bytes = archivo.leerArchivo("ipv6_icmpv6_ping.bin");
 
     if(bytes.size() != 0)
     {
@@ -79,10 +79,25 @@ int main()
         {
             IPv6 headerIPv6;
             string data;
+            vector<unsigned char> ipv6_remainder;
+            int x = 0;
 
             data = headerIPv6.toBinary(bytes);
             headerIPv6.setIPv6Header(data);
             headerIPv6.showIPv6Header();
+
+            //Se leyó hasta el byte 53, por lo que se empieza en el 54
+            for (int i = 54; i <= bytes.size(); i++)
+            {
+                ipv6_remainder.push_back(bytes[i]);
+            }
+
+            cout << "Resto de los datos: ";
+
+            for (int i = 0; i < ipv6_remainder.size(); i++)
+            {
+                printf("%02X ", ipv6_remainder[i]);
+            }
         }    
     }
     else

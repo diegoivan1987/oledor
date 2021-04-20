@@ -5,6 +5,11 @@ IPv6::IPv6() { }
 
 IPv6::~IPv6() { }
 
+int IPv6::getBitSize()
+{
+    return size;
+}
+
 //Conversiones
 string IPv6::toBinary(vector<unsigned char> bytes)
 {
@@ -532,7 +537,6 @@ void IPv6::setIPv6Header(string data)
     }
 
     destination_address[15] = binaryToDecimal(ipv6_dest_aux);
-
 }
 
 void IPv6::showIPv6Header()
