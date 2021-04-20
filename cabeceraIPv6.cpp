@@ -370,6 +370,169 @@ void IPv6::setIPv6Header(string data)
     }
 
     source_address[15] = binaryToDecimal(ipv6_source_aux);
+
+    //Direccion de destino - 128 bits - Hexadecimal
+    string ipv6_dest_aux;
+
+    //1er byte
+    for (size_t i = bit; i <= 311; i++)
+    {
+        ipv6_dest_aux += data[i];
+        bit++;
+    }
+
+    destination_address[0] = binaryToDecimal(ipv6_dest_aux);
+    
+    //2do byte
+    ipv6_dest_aux = "";
+    for (size_t i = bit; i <= 319; i++)
+    {
+        ipv6_dest_aux += data[i];
+        bit++;
+    }
+
+    destination_address[1] = binaryToDecimal(ipv6_dest_aux);
+
+    //3er byte
+    ipv6_dest_aux = "";
+    for (size_t i = bit; i <= 327; i++)
+    {
+        ipv6_dest_aux += data[i];
+        bit++;
+    }
+
+    destination_address[2] = binaryToDecimal(ipv6_dest_aux);
+
+    //4to byte
+    ipv6_dest_aux = "";
+    for (size_t i = bit; i <= 335; i++)
+    {
+        ipv6_dest_aux += data[i];
+        bit++;
+    }
+
+    destination_address[3] = binaryToDecimal(ipv6_dest_aux);
+
+    //5to byte
+    ipv6_dest_aux = "";
+    for (size_t i = bit; i <= 343; i++)
+    {
+        ipv6_dest_aux += data[i];
+        bit++;
+    }
+
+    destination_address[4] = binaryToDecimal(ipv6_dest_aux);
+
+    //6to byte
+    ipv6_dest_aux = "";
+    for (size_t i = bit; i <= 351; i++)
+    {
+        ipv6_dest_aux += data[i];
+        bit++;
+    }
+
+    destination_address[5] = binaryToDecimal(ipv6_dest_aux);
+
+    //7mo byte
+    ipv6_dest_aux = "";
+    for (size_t i = bit; i <= 359; i++)
+    {
+        ipv6_dest_aux += data[i];
+        bit++;
+    }
+
+    destination_address[6] = binaryToDecimal(ipv6_dest_aux);
+
+    //8vo byte
+    ipv6_dest_aux = "";
+    for (size_t i = bit; i <= 367; i++)
+    {
+        ipv6_dest_aux += data[i];
+        bit++;
+    }
+
+    destination_address[7] = binaryToDecimal(ipv6_dest_aux);
+
+    //9
+    ipv6_dest_aux = "";
+    for (size_t i = bit; i <= 375; i++)
+    {
+        ipv6_dest_aux += data[i];
+        bit++;
+    }
+
+    destination_address[8] = binaryToDecimal(ipv6_dest_aux);
+
+    //10
+    ipv6_dest_aux = "";
+    for (size_t i = bit; i <= 383; i++)
+    {
+        ipv6_dest_aux += data[i];
+        bit++;
+    }
+
+    destination_address[9] = binaryToDecimal(ipv6_dest_aux);
+
+    //11
+    ipv6_dest_aux = "";
+    for (size_t i = bit; i <= 391; i++)
+    {
+        ipv6_dest_aux += data[i];
+        bit++;
+    }
+
+    destination_address[10] = binaryToDecimal(ipv6_dest_aux);
+
+    //12
+    ipv6_dest_aux = "";
+    for (size_t i = bit; i <= 399; i++)
+    {
+        ipv6_dest_aux += data[i];
+        bit++;
+    }
+
+    destination_address[11] = binaryToDecimal(ipv6_dest_aux);
+
+    //13
+    ipv6_dest_aux = "";
+    for (size_t i = bit; i <= 407; i++)
+    {
+        ipv6_dest_aux += data[i];
+        bit++;
+    }
+
+    destination_address[12] = binaryToDecimal(ipv6_dest_aux);
+
+    //14
+    ipv6_dest_aux = "";
+    for (size_t i = bit; i <= 415; i++)
+    {
+        ipv6_dest_aux += data[i];
+        bit++;
+    }
+
+    destination_address[13] = binaryToDecimal(ipv6_dest_aux);
+
+    //15
+    ipv6_dest_aux = "";
+    for (size_t i = bit; i <= 423; i++)
+    {
+        ipv6_dest_aux += data[i];
+        bit++;
+    }
+
+    destination_address[14] = binaryToDecimal(ipv6_dest_aux);
+
+    //16
+    ipv6_dest_aux = "";
+    for (size_t i = bit; i <= 431; i++)
+    {
+        ipv6_dest_aux += data[i];
+        bit++;
+    }
+
+    destination_address[15] = binaryToDecimal(ipv6_dest_aux);
+
 }
 
 void IPv6::showIPv6Header()
@@ -401,4 +564,8 @@ void IPv6::showIPv6Header()
             source_address[0], source_address[1], source_address[2], source_address[3], source_address[4],
             source_address[5], source_address[6], source_address[7], source_address[8], source_address[9],
             source_address[10], source_address[11], source_address[12], source_address[13], source_address[14], source_address[15]);
+    printf("Direccion de destino: %02X%02X:%02X%02X:%02X%02X:%02X%02X:%02X%02X:%02X%02X:%02X%02X:%02X%02X\n",
+        destination_address[0], destination_address[1], destination_address[2], destination_address[3], destination_address[4],
+        destination_address[5], destination_address[6], destination_address[7], destination_address[8], destination_address[9],
+        destination_address[10], destination_address[11], destination_address[12], destination_address[13], destination_address[14], destination_address[15]);
 }
