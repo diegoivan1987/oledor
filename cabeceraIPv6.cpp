@@ -197,6 +197,17 @@ void IPv6::setIPv6Header(string data)
     }
 
     next_header = binaryToDecimal(ipv6_nextHeader);
+
+    //Limite de salto - 8 bits - Decimal
+    string ipv6_hopLimit;
+
+    for (size_t i = bit; i <= 175; i++)
+    {
+        ipv6_hopLimit += data[i];
+        bit++;
+    }
+    
+    hop_limit = binaryToDecimal(ipv6_hopLimit);
 }
 
 void IPv6::showIPv6Header()
@@ -223,5 +234,5 @@ void IPv6::showIPv6Header()
     cout << "Etiqueta de flujo: " << flow_label << endl;
     cout << "Longitud de datos: " << payload_length << " bytes" << endl;
     cout << "Encabezado siguiente: " << nextHeader(next_header) << endl;
-
+    cout << "Limite de salto: " << hop_limit << endl;
 }

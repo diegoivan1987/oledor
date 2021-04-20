@@ -14,7 +14,7 @@ private:
     int flow_label;
     unsigned int payload_length;
     int next_header;
-    int hop_limit;
+    unsigned int hop_limit;
     int source_address[16];
     int destination_address[16];
 public:
