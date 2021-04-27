@@ -112,26 +112,32 @@ string IPv6::nextHeader(int next)
     switch(next)
     {
         case 1: 
+            next_header_aux = "ICMPv4";
             return "ICMPv4"; 
             break;
 
         case 6: 
+            next_header_aux = "TCP";
             return "TCP"; 
             break;
 
         case 17: 
+            next_header_aux = "UDP";
             return "UDP"; 
             break;
 
         case 58: 
+            next_header_aux = "ICMPv6";
             return "ICMPv6"; 
             break;
 
         case 118: 
+            next_header_aux = "STP";
             return "STP"; 
             break;
 
         case 121: 
+            next_header_aux = "SMP";
             return "SMP"; 
             break;
 
@@ -567,4 +573,9 @@ void IPv6::showIPv6Header()
         destination_address[0], destination_address[1], destination_address[2], destination_address[3], destination_address[4],
         destination_address[5], destination_address[6], destination_address[7], destination_address[8], destination_address[9],
         destination_address[10], destination_address[11], destination_address[12], destination_address[13], destination_address[14], destination_address[15]);
+}
+
+string IPv6::getNextHeader()
+{
+    return next_header_aux;
 }

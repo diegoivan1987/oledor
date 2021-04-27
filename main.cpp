@@ -6,6 +6,7 @@
 #include "cabeceraARP.h"
 #include "cabeceraRARP.h"
 #include "cabeceraIPv6.h"
+#include "cabeceraICMPv6.h"
 
 using namespace std;
 
@@ -15,7 +16,7 @@ int main()
     CabeceraEthernet ce;
     vector<unsigned char> bytes;
 
-    bytes = archivo.leerArchivo("ipv6_icmpv6_ping.bin");
+    bytes = archivo.leerArchivo("ipv6_icmpv6_destination_unreachable.bin");
 
     if(bytes.size() != 0)
     {
@@ -86,6 +87,16 @@ int main()
             headerIPv6.setIPv6Header(data);
             headerIPv6.showIPv6Header();
 
+            if (headerIPv6.getNextHeader() == "ICMPv6")
+            {
+                ICMPv6 headerICMPv6;
+                string data;
+
+                data = headerICMPv6.toBinary(bytes);
+                headerICMPv6.setICMPv6Header(data);
+                headerICMPv6.showICMPv6Header();
+            }
+            
             //Se leyó hasta el byte 53, por lo que se empieza en el 54
             for (int i = 54; i <= bytes.size(); i++)
             {

@@ -14,6 +14,7 @@ private:
     int flow_label;
     unsigned int payload_length;
     int next_header;
+    string next_header_aux;
     unsigned int hop_limit;
     int source_address[16];
     int destination_address[16];
@@ -27,6 +28,7 @@ public:
     string nextHeader(int next);
     void setIPv6Header(string data);
     void showIPv6Header();
+    string getNextHeader();
 };
 
 #endif // IPV6_H
