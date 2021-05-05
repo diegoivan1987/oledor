@@ -306,6 +306,80 @@ void TCP::setTCPHeader(string data)
 
     offset = binaryToDecimal(aux);
     aux.clear();
+
+    //Reservado - 3 bits - Decimal
+    for (size_t i = bit; i <= 374; i++)
+    {
+        aux += data[i];
+        bit++;
+    }
+
+    reserved = binaryToDecimal(aux);
+    aux.clear();
+
+    //Banderas - 9 bits - Decimal
+    //NS Flag
+    aux += data[bit];
+    bit++;
+
+    NS_flag = binaryToDecimal(aux);
+    aux.clear();
+
+    //CWR Flag
+    aux += data[bit];
+    bit++;
+
+    CWR_flag = binaryToDecimal(aux);
+    aux.clear();
+
+    //ECE flag
+    aux += data[bit];
+    bit++;
+
+    ECE_flag = binaryToDecimal(aux);
+    aux.clear();
+
+    //URG Flag
+    aux += data[bit];
+    bit++;
+
+    URG_flag = binaryToDecimal(aux);
+    aux.clear();
+
+    //ACK Flag
+    aux += data[bit];
+    bit++;
+
+    ACK_flag = binaryToDecimal(aux);
+    aux.clear();
+
+    //PSH Flag
+    aux += data[bit];
+    bit++;
+
+    PSH_flag = binaryToDecimal(aux);
+    aux.clear();
+
+    //RST Flag
+    aux += data[bit];
+    bit++;
+
+    RST_flag = binaryToDecimal(aux);
+    aux.clear();
+
+    //SYN Flag
+    aux += data[bit];
+    bit++;
+
+    SYN_flag = binaryToDecimal(aux);
+    aux.clear();
+
+    //FIN flag
+    aux += data[bit];
+    bit++;
+
+    FIN_flag = binaryToDecimal(aux);
+    aux.clear();
 }
 
 void TCP::showTCPHeader()
@@ -318,4 +392,104 @@ void TCP::showTCPHeader()
     cout << "Numero de secuencia: " << sequence_number << endl;
     cout << "Numero de acuse de recibo: " << acknowledgment_number << endl;
     cout << "Longitud de cabecera: " << offset << endl;
+    cout << "Reservado: " << reserved << endl;
+    cout << "Banderas: " << endl;
+    cout << "   -NS:  " << NS_flag;
+
+    if (NS_flag == 1)
+    {
+        cout << " - Activado" << endl;
+    }
+    else
+    {
+        cout << " - Desactivado" << endl;
+    }
+
+    cout << "   -CWR: " << CWR_flag;
+
+    if (CWR_flag == 1)
+    {
+        cout << " - Activado" << endl;
+    }
+    else
+    {
+        cout << " - Desactivado" << endl;
+    }
+
+    cout << "   -ECE: " << ECE_flag;
+
+    if (ECE_flag == 1)
+    {
+        cout << " - Activado" << endl;
+    }
+    else
+    {
+        cout << " - Desactivado" << endl;
+    }
+
+    cout << "   -URG: " << URG_flag;
+
+    if (URG_flag == 1)
+    {
+        cout << " - Activado" << endl;
+    }
+    else
+    {
+        cout << " - Desactivado" << endl;
+    }
+
+    cout << "   -ACK: " << ACK_flag;
+
+    if (ACK_flag == 1)
+    {
+        cout << " - Activado" << endl;
+    }
+    else
+    {
+        cout << " - Desactivado" << endl;
+    }
+
+    cout << "   -PSH: " << PSH_flag;
+
+    if (PSH_flag == 1)
+    {
+        cout << " - Activado" << endl;
+    }
+    else
+    {
+        cout << " - Desactivado" << endl;
+    }
+
+    cout << "   -RST: " << RST_flag;
+
+    if (RST_flag == 1)
+    {
+        cout << " - Activado" << endl;
+    }
+    else
+    {
+        cout << " - Desactivado" << endl;
+    }
+
+    cout << "   -SYN: " << SYN_flag;
+
+    if (SYN_flag == 1)
+    {
+        cout << " - Activado" << endl;
+    }
+    else
+    {
+        cout << " - Desactivado" << endl;
+    }
+
+    cout << "   -FIN: " << FIN_flag;
+
+    if (FIN_flag == 1)
+    {
+        cout << " - Activado" << endl;
+    }
+    else
+    {
+        cout << " - Desactivado" << endl;
+    }
 }
