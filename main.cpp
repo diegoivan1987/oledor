@@ -145,7 +145,7 @@ int main()
                 TCP_header.setTCPv6Header(data);
                 TCP_header.showTCPv6Header();
 
-                //Se leyó hasta el byte 73, por lo que se empieza en el 54
+                //Se leyó hasta el byte 73, por lo que se empieza en el 74
                 for (int i = 74; i <= bytes.size(); i++)
                 {
                     TCP_remainder.push_back(bytes[i]);
