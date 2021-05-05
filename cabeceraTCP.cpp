@@ -1,0 +1,161 @@
+#include "cabeceraTCP.h"
+
+//constructor y destructor
+TCP::TCP() { }
+
+TCP::~TCP() { }
+
+//Conversiones
+string TCP::toBinary(vector<unsigned char> bytes)
+{
+    string binary;
+    for(size_t i = 0; i < bytes.size(); i++)
+    {
+        for(int j = 7; j >= 0; j--)
+        {
+            binary += ((bytes.at(i) & (1 << j)) ? '1' : '0');
+        }
+    }
+    return binary;
+}
+
+int TCP::binaryToDecimal(string number)
+{
+    int total;
+    total = stoull(number, 0, 2); 
+    return total;
+}
+
+//Valores de los puertos
+void TCP::setSourcePortService(int port_value)
+{
+    if (port_value >= 0 && port_value <= 1023)
+    {
+        cout << "Puerto bien conocido" << " - " << endl;
+
+        if (port_value == 20)
+        {
+            source_port_service = "FTP";
+            cout << source_port_service;
+        }
+
+        if (port_value == 21)
+        {
+            source_port_service = "FTP";
+            cout << source_port_service;
+        }
+
+        if (port_value == 22)
+        {
+            source_port_service = "SSH";
+            cout << source_port_service;
+        }
+        
+        if (port_value == 23)
+        {
+            source_port_service = "TELNET";
+            cout << source_port_service;
+        }
+        
+        if (port_value == 25)
+        {
+            source_port_service = "SMTP";
+            cout << source_port_service;
+        }
+        
+        if (port_value == 53)
+        {
+            source_port_service = "DNS";
+            cout << source_port_service;
+        }
+
+        if (port_value == 67)
+        {
+            source_port_service = "DHCP";
+            cout << source_port_service;
+        }
+
+        if (port_value == 68)
+        {
+            source_port_service = "DHCP";
+            cout << source_port_service;
+        }
+
+        if (port_value == 69)
+        {
+            source_port_service = "TFTP";
+            cout << source_port_service;
+        }
+
+        if (port_value == 80)
+        {
+            source_port_service = "HTTP";
+            cout << source_port_service;
+        }
+
+        if (port_value == 110)
+        {
+            source_port_service = "POP3";
+            cout << source_port_service;
+        }
+
+        if (port_value == 143)
+        {
+            source_port_service = "IMAP";
+            cout << source_port_service;
+        }
+
+        if (port_value == 443)
+        {
+            source_port_service = "HTTPS";
+            cout << source_port_service;
+        }
+
+        if (port_value == 993)
+        {
+            source_port_service = "IMAP SSL";
+            cout << source_port_service;
+        }
+
+        if (port_value == 995)
+        {
+            source_port_service = "POP SSL";
+            cout << source_port_service;
+        }   
+    }
+
+    if (port_value >= 1024 && port_value <= 49151)
+    {
+        cout << "Puerto registrado" << endl;
+    }
+
+    if (port_value >= 49152 && port_value <= 65535)
+    {
+        cout << "Puerto dinamico o privado" << endl;
+    }
+}
+
+//Procedimiento
+void TCP::setTCPHeader(string data)
+{
+    //La cabecera comienza en el bit 272
+    int bit = 272;
+    string aux;
+
+    //Puerto de origen - 16 bits - Decimal
+    for (size_t i = bit; i <= 287; i++)
+    {
+        aux += data[i];
+        bit++;
+    }
+
+    source_port = binaryToDecimal(aux);
+    aux.clear();
+}
+
+void TCP::showTCPHeader()
+{
+    cout << "       Cabecera TCP" << endl;
+    cout << "Puerto de origen: " << source_port << " - ";
+    setSourcePortService(source_port);
+}
