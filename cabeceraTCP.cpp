@@ -286,6 +286,16 @@ void TCP::setTCPHeader(string data)
 
     sequence_number = binaryToLong(aux);
     aux.clear();
+
+    //Numero de acuse de recibo - 32 bits - Decimal
+    for (size_t i = bit; i <= 367; i++)
+    {
+        aux += data[i];
+        bit++;
+    }
+
+    acknowledgment_number = binaryToLong(aux);
+    aux.clear();
 }
 
 void TCP::showTCPHeader()
@@ -296,4 +306,5 @@ void TCP::showTCPHeader()
     cout << "Puerto de destino: " << destination_port << " - ";
     setDestinationPortService(destination_port);
     cout << "Numero de secuencia: " << sequence_number << endl;
+    cout << "Numero de acuse de recibo: " << acknowledgment_number << endl;
 }

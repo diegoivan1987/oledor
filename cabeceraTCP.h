@@ -14,7 +14,7 @@ private:
     long long destination_port;
     string destination_port_service;
     long long sequence_number;
-    int acknowledgment_number;
+    long long acknowledgment_number;
     int offset;
     int reserved;
     int NS_flag;
