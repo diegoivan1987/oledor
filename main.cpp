@@ -17,7 +17,7 @@ int main()
     CabeceraEthernet ce;
     vector<unsigned char> bytes;
 
-    bytes = archivo.leerArchivo("ethernet_ipv4_tcp.bin");
+    bytes = archivo.leerArchivo("ethernet_ipv4_tcp_syn.bin");
 
     if(bytes.size() != 0)
     {

@@ -9,11 +9,11 @@ using namespace std;
 class TCP
 {
 private:
-    int source_port;
+    long long source_port;
     string source_port_service;
-    int destination_port;
+    long long destination_port;
     string destination_port_service;
-    int sequence_number;
+    long long sequence_number;
     int acknowledgment_number;
     int offset;
     int reserved;
@@ -35,8 +35,10 @@ public:
     ~TCP();
     string toBinary(vector<unsigned char> bytes);
     int binaryToDecimal(string number);
+    long long binaryToLong(string number);
     void setTCPHeader(string data);
     void setSourcePortService(int port_value);
+    void setDestinationPortService(int port_value);
     void showTCPHeader();
 };
 
