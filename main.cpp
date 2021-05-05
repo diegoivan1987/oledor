@@ -8,6 +8,7 @@
 #include "cabeceraIPv6.h"
 #include "cabeceraICMPv6.h"
 #include "cabeceraTCP.h"
+#include "cabeceraTCPIPv6.h"
 
 using namespace std;
 
@@ -119,20 +120,45 @@ int main()
                 data = headerICMPv6.toBinary(bytes);
                 headerICMPv6.setICMPv6Header(data);
                 headerICMPv6.showICMPv6Header();
+
+                //Se leyó hasta el byte 53, por lo que se empieza en el 54
+                for (int i = 54; i <= bytes.size(); i++)
+                {
+                    ipv6_remainder.push_back(bytes[i]);
+                }
+
+                cout << "Resto de los datos: ";
+
+                for (int i = 0; i < ipv6_remainder.size(); i++)
+                {
+                    printf("%02X ", ipv6_remainder[i]);
+                }
+            }
+
+            if (headerIPv6.getNextHeader() == "TCP")
+            {
+                TCPv6 TCP_header;
+                string data;
+                vector<unsigned char> TCP_remainder;
+
+                data = TCP_header.toBinary(bytes);
+                TCP_header.setTCPv6Header(data);
+                TCP_header.showTCPv6Header();
+
+                //Se leyó hasta el byte 73, por lo que se empieza en el 54
+                for (int i = 74; i <= bytes.size(); i++)
+                {
+                    TCP_remainder.push_back(bytes[i]);
+                }
+
+                cout << "Resto de los datos: ";
+
+                for (int i = 0; i < TCP_remainder.size(); i++)
+                {
+                    printf("%02X ", TCP_remainder[i]);
+                }
             }
             
-            //Se leyó hasta el byte 53, por lo que se empieza en el 54
-            for (int i = 54; i <= bytes.size(); i++)
-            {
-                ipv6_remainder.push_back(bytes[i]);
-            }
-
-            cout << "Resto de los datos: ";
-
-            for (int i = 0; i < ipv6_remainder.size(); i++)
-            {
-                printf("%02X ", ipv6_remainder[i]);
-            }
         }    
     }
     else
