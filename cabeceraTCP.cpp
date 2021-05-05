@@ -380,6 +380,36 @@ void TCP::setTCPHeader(string data)
 
     FIN_flag = binaryToDecimal(aux);
     aux.clear();
+
+    //Tamaño de ventana - 16 bits - Decimal
+    for (size_t i = bit; i <= 399; i++)
+    {
+        aux += data[bit];
+        bit++;
+    }
+
+    window_size = binaryToDecimal(aux);
+    aux.clear();
+
+    //Suma de verificacion - 16 bits - Hexadecimal
+    for (size_t i = bit; i <= 415; i++)
+    {
+        aux += data[bit];
+        bit++;
+    }
+
+    checksum = binaryToDecimal(aux);
+    aux.clear();
+
+    //Puntero urgente - 16 bits - Decimal
+    for (size_t i = bit; i <= 431; i++)
+    {
+        aux += data[bit];
+        bit++;
+    }
+
+    urgent_pointer = binaryToDecimal(aux);
+    aux.clear();
 }
 
 void TCP::showTCPHeader()
@@ -492,4 +522,8 @@ void TCP::showTCPHeader()
     {
         cout << " - Desactivado" << endl;
     }
+
+    cout << "Ventana de recepcion: " << window_size << " bytes" << endl;
+    printf("Suma de verificacion: %02X\n", checksum);
+    cout << "Puntero urgente: " << urgent_pointer << " bytes" << endl;
 }

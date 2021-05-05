@@ -58,10 +58,24 @@ int main()
             {
                 TCP TCP_header;
                 string data;
+                vector<unsigned char> TCP_remainder;
 
                 data = TCP_header.toBinary(bytes);
                 TCP_header.setTCPHeader(data);
                 TCP_header.showTCPHeader();
+
+                //Se leyó hasta el byte 53, por lo que se empieza en el 54
+                for (int i = 54; i <= bytes.size(); i++)
+                {
+                    TCP_remainder.push_back(bytes[i]);
+                }
+
+                cout << "Resto de los datos: ";
+
+                for (int i = 0; i < TCP_remainder.size(); i++)
+                {
+                    printf("%02X ", TCP_remainder[i]);
+                }
             }
         }
 
