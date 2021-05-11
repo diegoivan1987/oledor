@@ -53,11 +53,24 @@ int main()
             {
                 TCP *TCP_header4 = new TCP(272);
                 string data;
+                vector<unsigned char> TCP_remainder;
 
                 data = TCP_header4->toBinary(bytes);
                 TCP_header4->setTCPHeader(data);
                 TCP_header4->showTCPHeader();
 
+                //Se leyó hasta el byte 53, por lo que se empieza en el 54
+                for (size_t i = 54; i <= bytes.size(); i++)
+                {
+                    TCP_remainder.push_back(bytes[i]);
+                }
+
+                cout << "Resto de los datos: ";
+
+                for (size_t i = 0; i < TCP_remainder.size(); i++)
+                {
+                    printf("%02X ", TCP_remainder[i]);
+                }
             }
 
 
@@ -111,10 +124,24 @@ int main()
             {
                 TCP *TCP_header6 = new TCP(432);
                 string data;
+                vector<unsigned char> TCP_remainder;
 
                 data = TCP_header6->toBinary(bytes);
                 TCP_header6->setTCPHeader(data);
                 TCP_header6->showTCPHeader();
+
+                //Se leyó hasta el byte 73, por lo que se empieza en el 74
+                for (size_t i = 74; i <= bytes.size(); i++)
+                {
+                    TCP_remainder.push_back(bytes[i]);
+                }
+
+                cout << "Resto de los datos: ";
+
+                for (size_t i = 0; i < TCP_remainder.size(); i++)
+                {
+                    printf("%02X ", TCP_remainder[i]);
+                }
             }
 
         }
