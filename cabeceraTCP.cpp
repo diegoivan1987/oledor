@@ -1,7 +1,10 @@
 #include "cabeceraTCP.h"
 
 //constructor y destructor
-TCP::TCP() { }
+TCP::TCP(size_t bit)
+{
+    this->bitAcumulador = bit;
+}
 
 TCP::~TCP() { }
 
@@ -22,14 +25,14 @@ string TCP::toBinary(vector<unsigned char> bytes)
 int TCP::binaryToDecimal(string number)
 {
     int total;
-    total = stoull(number, 0, 2); 
+    total = stoull(number, 0, 2);
     return total;
 }
 
 long long TCP::binaryToLong(string number)
 {
     long long total;
-    total = stoull(number, 0, 2); 
+    total = stoull(number, 0, 2);
     return total;
 }
 
@@ -57,19 +60,19 @@ void TCP::setSourcePortService(int port_value)
             source_port_service = "SSH";
             cout << source_port_service << endl;
         }
-        
+
         if (port_value == 23)
         {
             source_port_service = "TELNET";
             cout << source_port_service << endl;
         }
-        
+
         if (port_value == 25)
         {
             source_port_service = "SMTP";
             cout << source_port_service << endl;
         }
-        
+
         if (port_value == 53)
         {
             source_port_service = "DNS";
@@ -128,7 +131,7 @@ void TCP::setSourcePortService(int port_value)
         {
             source_port_service = "POP SSL";
             cout << source_port_service << endl;
-        }   
+        }
     }
 
     if (port_value >= 1024 && port_value <= 49151)
@@ -165,19 +168,19 @@ void TCP::setDestinationPortService(int port_value)
             destination_port_service = "SSH";
             cout << destination_port_service << endl;
         }
-        
+
         if (port_value == 23)
         {
             destination_port_service = "TELNET";
             cout << destination_port_service << endl;
         }
-        
+
         if (port_value == 25)
         {
             destination_port_service = "SMTP";
             cout << destination_port_service << endl;
         }
-        
+
         if (port_value == 53)
         {
             destination_port_service = "DNS";
@@ -236,7 +239,7 @@ void TCP::setDestinationPortService(int port_value)
         {
             destination_port_service = "POP SSL";
             cout << destination_port_service << endl;
-        }   
+        }
     }
 
     if (port_value >= 1024 && port_value <= 49151)
@@ -255,10 +258,12 @@ void TCP::setTCPHeader(string data)
 {
     //La cabecera comienza en el bit 272
     int bit = 272;
+    bitAcumulador = bit-1;
     string aux;
 
     //Puerto de origen - 16 bits - Decimal
-    for (size_t i = bit; i <= 287; i++)
+    bitAcumulador += 16;
+    for (size_t i = bit; i <= bitAcumulador; i++)
     {
         aux += data[i];
         bit++;
@@ -268,17 +273,19 @@ void TCP::setTCPHeader(string data)
     aux.clear();
 
     //Puerto de destino - 16 bits - Decimal
-    for (size_t i = bit; i <= 303; i++)
+    bitAcumulador += 16;
+    for (size_t i = bit; i <= bitAcumulador; i++)
     {
         aux += data[i];
         bit++;
     }
-    
+
     destination_port = binaryToLong(aux);
     aux.clear();
 
-    //Numero de secuencia - 32 bita - Decimal
-    for (size_t i = bit; i <= 335; i++)
+    //Numero de secuencia - 32 bits - Decimal
+    bitAcumulador += 32;
+    for (size_t i = bit; i <= bitAcumulador; i++)
     {
         aux += data[i];
         bit++;
@@ -288,7 +295,8 @@ void TCP::setTCPHeader(string data)
     aux.clear();
 
     //Numero de acuse de recibo - 32 bits - Decimal
-    for (size_t i = bit; i <= 367; i++)
+    bitAcumulador += 32;
+    for (size_t i = bit; i <= bitAcumulador; i++)
     {
         aux += data[i];
         bit++;
@@ -298,7 +306,8 @@ void TCP::setTCPHeader(string data)
     aux.clear();
 
     //Longitud de cabecera - 4 bits - Decimal
-    for (size_t i = bit; i <= 371; i++)
+    bitAcumulador += 4;
+    for (size_t i = bit; i <= bitAcumulador; i++)
     {
         aux += data[i];
         bit++;
@@ -308,7 +317,8 @@ void TCP::setTCPHeader(string data)
     aux.clear();
 
     //Reservado - 3 bits - Decimal
-    for (size_t i = bit; i <= 374; i++)
+    bitAcumulador += 3;
+    for (size_t i = bit; i <= bitAcumulador; i++)
     {
         aux += data[i];
         bit++;
@@ -318,6 +328,7 @@ void TCP::setTCPHeader(string data)
     aux.clear();
 
     //Banderas - 9 bits - Decimal
+    bitAcumulador += 9;
     //NS Flag
     aux += data[bit];
     bit++;
@@ -382,7 +393,8 @@ void TCP::setTCPHeader(string data)
     aux.clear();
 
     //Tamaño de ventana - 16 bits - Decimal
-    for (size_t i = bit; i <= 399; i++)
+    bitAcumulador += 16;
+    for (size_t i = bit; i <= bitAcumulador; i++)
     {
         aux += data[bit];
         bit++;
@@ -392,7 +404,8 @@ void TCP::setTCPHeader(string data)
     aux.clear();
 
     //Suma de verificacion - 16 bits - Hexadecimal
-    for (size_t i = bit; i <= 415; i++)
+    bitAcumulador += 16;
+    for (size_t i = bit; i <= bitAcumulador; i++)
     {
         aux += data[bit];
         bit++;
@@ -402,7 +415,8 @@ void TCP::setTCPHeader(string data)
     aux.clear();
 
     //Puntero urgente - 16 bits - Decimal
-    for (size_t i = bit; i <= 431; i++)
+    bitAcumulador += 16;
+    for (size_t i = bit; i <= bitAcumulador; i++)
     {
         aux += data[bit];
         bit++;
@@ -414,7 +428,7 @@ void TCP::setTCPHeader(string data)
 
 void TCP::showTCPHeader()
 {
-    cout << "       Cabecera TCP" << endl;
+    cout << "\n ***Cabecera TCP***" << endl;
     cout << "Puerto de origen: " << source_port << " - ";
     setSourcePortService(source_port);
     cout << "Puerto de destino: " << destination_port << " - ";

@@ -30,8 +30,10 @@ private:
     int checksum;
     int urgent_pointer;
 
+    size_t bitAcumulador;
+
 public:
-    TCP();
+    TCP(size_t bit);
     ~TCP();
     string toBinary(vector<unsigned char> bytes);
     int binaryToDecimal(string number);

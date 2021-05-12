@@ -5,8 +5,8 @@
 #include <iostream>
 
 using namespace std;
-class CabeceraEthernet
-{
+class CabeceraEthernet{
+
     private:
         vector<unsigned char> dirDestino;
         vector<unsigned char> dirOrigen;

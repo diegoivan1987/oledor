@@ -22,7 +22,7 @@ string IPv6::toBinary(vector<unsigned char> bytes)
 int IPv6::binaryToDecimal(string number)
 {
     int total;
-    total = stoull(number, 0, 2); 
+    total = stoull(number, 0, 2);
     return total;
 }
 
@@ -43,27 +43,27 @@ string IPv6::trafficClassPriority(string bits)
     {
         return "Inmediato";
     }
-    
+
     if (bits == "011")
     {
         return "Relampago";
     }
-    
+
     if (bits == "100")
     {
         return "Invalidacion Relampago";
     }
-    
+
     if (bits == "101")
     {
         return "Procesando llamada critica o de emergencia";
-    } 
-    
+    }
+
     if (bits == "110")
     {
         return "Control de trabajo de internet";
     }
-    
+
     if (bits == "111")
     {
         return "Control de red";
@@ -80,17 +80,17 @@ void IPv6::trafficClassFeatures(string bits)
     {
         cout << "   -Retardo: Normal" << endl;
     }
-    
+
     if(bits[0] == '1')
     {
         cout <<  "  -Retardo: Bajo" << endl;
     }
-    
+
     if(bits[1] == '0')
     {
         cout << "   -Rendimiento: Normal" << endl;
     }
-    
+
     if(bits[1] == '1')
     {
         cout << "   -Rendimiento: Alto" << endl;
@@ -100,7 +100,7 @@ void IPv6::trafficClassFeatures(string bits)
     {
         cout << "   -Fiabilidad: Normal" << endl;
     }
-    
+
     if(bits[2] == '1')
     {
         cout << "   -Fiabilidad: Alta" << endl;
@@ -111,37 +111,31 @@ string IPv6::nextHeader(int next)
 {
     switch(next)
     {
-        case 1: 
-            next_header_aux = "ICMPv4";
-            return "ICMPv4"; 
+        case 1:
+            return "ICMPv4";
             break;
 
-        case 6: 
-            next_header_aux = "TCP";
-            return "TCP"; 
+        case 6:
+            return "TCP";
             break;
 
-        case 17: 
-            next_header_aux = "UDP";
-            return "UDP"; 
+        case 17:
+            return "UDP";
             break;
 
-        case 58: 
-            next_header_aux = "ICMPv6";
-            return "ICMPv6"; 
+        case 58:
+            return "ICMPv6";
             break;
 
-        case 118: 
-            next_header_aux = "STP";
-            return "STP"; 
+        case 118:
+            return "STP";
             break;
 
-        case 121: 
-            next_header_aux = "SMP";
-            return "SMP"; 
+        case 121:
+            return "SMP";
             break;
 
-        default: 
+        default:
             return "Valor no encontrado";
             break;
     }
@@ -173,13 +167,13 @@ void IPv6::setIPv6Header(string data)
 
     //Etiqueta de flujo - 20 bits - decimal
     string ipv6_flowLabel;
-    
+
     for (size_t i = bit; i <= 143; i++)
     {
         ipv6_flowLabel += data[i];
         bit++;
     }
-    
+
     flow_label = binaryToDecimal(ipv6_flowLabel);
 
     //Tamaño de datos - 16 bits - Decimal
@@ -212,7 +206,7 @@ void IPv6::setIPv6Header(string data)
         ipv6_hopLimit += data[i];
         bit++;
     }
-    
+
     hop_limit = binaryToDecimal(ipv6_hopLimit);
 
     //Direccion de origen - 128 bits - Hexadecimal
@@ -226,7 +220,7 @@ void IPv6::setIPv6Header(string data)
     }
 
     source_address[0] = binaryToDecimal(ipv6_source_aux);
-    
+
     //2do byte
     ipv6_source_aux = "";
     for (size_t i = bit; i <= 191; i++)
@@ -388,7 +382,7 @@ void IPv6::setIPv6Header(string data)
     }
 
     destination_address[0] = binaryToDecimal(ipv6_dest_aux);
-    
+
     //2do byte
     ipv6_dest_aux = "";
     for (size_t i = bit; i <= 319; i++)
@@ -563,7 +557,8 @@ void IPv6::showIPv6Header()
     trafficClassFeatures(features);
     cout << "Etiqueta de flujo: " << flow_label << endl;
     cout << "Longitud de datos: " << payload_length << " bytes" << endl;
-    cout << "Encabezado siguiente: " << nextHeader(next_header) << endl;
+    next_header_aux = nextHeader(next_header);
+    cout << "Encabezado siguiente: " << next_header_aux << endl;
     cout << "Limite de salto: " << hop_limit << endl;
     printf("Direccion de origen: %02X%02X:%02X%02X:%02X%02X:%02X%02X:%02X%02X:%02X%02X:%02X%02X:%02X%02X\n",
             source_address[0], source_address[1], source_address[2], source_address[3], source_address[4],

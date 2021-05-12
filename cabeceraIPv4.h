@@ -8,6 +8,7 @@ using namespace std;
 class CabeceraIPv4
 {
     private:
+
         int versionI;
         int cabeceraI;
         string tipoServicioS;
@@ -24,16 +25,16 @@ class CabeceraIPv4
 
     public:
         CabeceraIPv4();
-        string toBinary(vector<unsigned char> bytes);
+        static string toBinary(vector<unsigned char> bytes);
         void mostrarBinario(string binario);
         void setCabeceraIPv4(string bin);
         void mostrarCabeceraIPv4();
-        int binToDecimal(string bin);
+        static int binToDecimal(string bin);
         void tipoServicioDesglose_3(string bits);
         void tipoServicioDesglose_5(string bits);
         void flags(string bits);
         void setProtocolo(int dato);
-        string getProtocol();
+        string getProtocolo();
 };
 
-#endif // CABECERAIPV4_H
+#endif

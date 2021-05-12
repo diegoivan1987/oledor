@@ -14,10 +14,10 @@ private:
     int flow_label;
     unsigned int payload_length;
     int next_header;
-    string next_header_aux;
     unsigned int hop_limit;
     int source_address[16];
     int destination_address[16];
+    string next_header_aux;
 public:
     IPv6();
     ~IPv6();

@@ -1,12 +1,15 @@
-#include "cabeceraTCPIPv6.h"
+#include "cabeceraUDP.h"
 
 //Constructor y destructor
-TCPv6::TCPv6() { }
+UDP::UDP(size_t bit)
+{
+    this->bitAcumulador = bit;
+}
 
-TCPv6::~TCPv6() { }
+UDP::~UDP() { }
 
 //Conversiones
-string TCPv6::toBinary(vector<unsigned char> bytes)
+string UDP::toBinary(const vector<unsigned char>& bytes)
 {
     string binary;
     for(size_t i = 0; i < bytes.size(); i++)
@@ -19,26 +22,19 @@ string TCPv6::toBinary(vector<unsigned char> bytes)
     return binary;
 }
 
-int TCPv6::binaryToDecimal(string number)
+int UDP::binaryToDecimal(const string& number)
 {
     int total;
-    total = stoull(number, 0, 2); 
-    return total;
-}
-
-long long TCPv6::binaryToLong(string number)
-{
-    long long total;
-    total = stoull(number, 0, 2); 
+    total = stoull(number, 0, 2);
     return total;
 }
 
 //Valores de los puertos
-void TCPv6::setSourcePortService(int port_value)
+void UDP::setSourcePortService(int port_value)
 {
     if (port_value >= 0 && port_value <= 1023)
     {
-        cout << "Puerto bien conocido" << " - " << endl;
+        cout << "Puerto bien conocido" << " - ";
 
         if (port_value == 20)
         {
@@ -57,19 +53,19 @@ void TCPv6::setSourcePortService(int port_value)
             source_port_service = "SSH";
             cout << source_port_service << endl;
         }
-        
+
         if (port_value == 23)
         {
             source_port_service = "TELNET";
             cout << source_port_service << endl;
         }
-        
+
         if (port_value == 25)
         {
             source_port_service = "SMTP";
             cout << source_port_service << endl;
         }
-        
+
         if (port_value == 53)
         {
             source_port_service = "DNS";
@@ -128,7 +124,7 @@ void TCPv6::setSourcePortService(int port_value)
         {
             source_port_service = "POP SSL";
             cout << source_port_service << endl;
-        }   
+        }
     }
 
     if (port_value >= 1024 && port_value <= 49151)
@@ -142,11 +138,11 @@ void TCPv6::setSourcePortService(int port_value)
     }
 }
 
-void TCPv6::setDestinationPortService(int port_value)
+void UDP::setDestinationPortService(int port_value)
 {
     if (port_value >= 0 && port_value <= 1023)
     {
-        cout << "Puerto bien conocido" << " - " << endl;
+        cout << "Puerto bien conocido" << " - ";
 
         if (port_value == 20)
         {
@@ -165,19 +161,19 @@ void TCPv6::setDestinationPortService(int port_value)
             destination_port_service = "SSH";
             cout << destination_port_service << endl;
         }
-        
+
         if (port_value == 23)
         {
             destination_port_service = "TELNET";
             cout << destination_port_service << endl;
         }
-        
+
         if (port_value == 25)
         {
             destination_port_service = "SMTP";
             cout << destination_port_service << endl;
         }
-        
+
         if (port_value == 53)
         {
             destination_port_service = "DNS";
@@ -236,7 +232,7 @@ void TCPv6::setDestinationPortService(int port_value)
         {
             destination_port_service = "POP SSL";
             cout << destination_port_service << endl;
-        }   
+        }
     }
 
     if (port_value >= 1024 && port_value <= 49151)
@@ -251,279 +247,63 @@ void TCPv6::setDestinationPortService(int port_value)
 }
 
 //Procedimiento
-void TCPv6::setTCPv6Header(string data)
+void UDP::setUDPHeader(const string& data)
 {
-    //La cabecera comienza en el bit 432
-    int bit = 432;
+    int bit = bitAcumulador;
+    bitAcumulador = bitAcumulador-1;
     string aux;
 
     //Puerto de origen - 16 bits - Decimal
-    for (size_t i = bit; i <= 447; i++)
+    bitAcumulador += 16;
+    for (size_t i = bit; i <= bitAcumulador; i++)
     {
         aux += data[i];
         bit++;
     }
 
-    source_port = binaryToLong(aux);
+    source_port = binaryToDecimal(aux);
     aux.clear();
 
     //Puerto de destino - 16 bits - Decimal
-    for (size_t i = bit; i <= 463; i++)
+    bitAcumulador += 16;
+    for (size_t i = bit; i <= bitAcumulador; i++)
+    {
+        aux += data[i];
+        bit++;
+    }
+
+    destination_port = binaryToDecimal(aux);
+    aux.clear();
+
+    //Longitud total - 16 bits - Decimal
+    bitAcumulador += 16;
+    for (size_t i = bit; i <= bitAcumulador; i++)
     {
         aux += data[i];
         bit++;
     }
     
-    destination_port = binaryToLong(aux);
+    length = binaryToDecimal(aux);
     aux.clear();
 
-    //Numero de secuencia - 32 bita - Decimal
-    for (size_t i = bit; i <= 495; i++)
+    //Suma de comprobacion - 16 bits - Hexadecimal
+    bitAcumulador += 16;
+    for (size_t i = bit; i <= bitAcumulador; i++)
     {
         aux += data[i];
-        bit++;
-    }
-
-    sequence_number = binaryToLong(aux);
-    aux.clear();
-
-    //Numero de acuse de recibo - 32 bits - Decimal
-    for (size_t i = bit; i <= 527; i++)
-    {
-        aux += data[i];
-        bit++;
-    }
-
-    acknowledgment_number = binaryToLong(aux);
-    aux.clear();
-
-    //Longitud de cabecera - 4 bits - Decimal
-    for (size_t i = bit; i <= 531; i++)
-    {
-        aux += data[i];
-        bit++;
-    }
-
-    offset = binaryToDecimal(aux);
-    aux.clear();
-
-    //Reservado - 3 bits - Decimal
-    for (size_t i = bit; i <= 534; i++)
-    {
-        aux += data[i];
-        bit++;
-    }
-
-    reserved = binaryToDecimal(aux);
-    aux.clear();
-
-    //Banderas - 9 bits - Decimal
-    //NS Flag
-    aux += data[bit];
-    bit++;
-
-    NS_flag = binaryToDecimal(aux);
-    aux.clear();
-
-    //CWR Flag
-    aux += data[bit];
-    bit++;
-
-    CWR_flag = binaryToDecimal(aux);
-    aux.clear();
-
-    //ECE flag
-    aux += data[bit];
-    bit++;
-
-    ECE_flag = binaryToDecimal(aux);
-    aux.clear();
-
-    //URG Flag
-    aux += data[bit];
-    bit++;
-
-    URG_flag = binaryToDecimal(aux);
-    aux.clear();
-
-    //ACK Flag
-    aux += data[bit];
-    bit++;
-
-    ACK_flag = binaryToDecimal(aux);
-    aux.clear();
-
-    //PSH Flag
-    aux += data[bit];
-    bit++;
-
-    PSH_flag = binaryToDecimal(aux);
-    aux.clear();
-
-    //RST Flag
-    aux += data[bit];
-    bit++;
-
-    RST_flag = binaryToDecimal(aux);
-    aux.clear();
-
-    //SYN Flag
-    aux += data[bit];
-    bit++;
-
-    SYN_flag = binaryToDecimal(aux);
-    aux.clear();
-
-    //FIN flag
-    aux += data[bit];
-    bit++;
-
-    FIN_flag = binaryToDecimal(aux);
-    aux.clear();
-
-    //Tamaño de ventana - 16 bits - Decimal
-    for (size_t i = bit; i <= 559; i++)
-    {
-        aux += data[bit];
-        bit++;
-    }
-
-    window_size = binaryToDecimal(aux);
-    aux.clear();
-
-    //Suma de verificacion - 16 bits - Hexadecimal
-    for (size_t i = bit; i <= 575; i++)
-    {
-        aux += data[bit];
         bit++;
     }
 
     checksum = binaryToDecimal(aux);
-    aux.clear();
-
-    //Puntero urgente - 16 bits - Decimal
-    for (size_t i = bit; i <= 591; i++)
-    {
-        aux += data[bit];
-        bit++;
-    }
-
-    urgent_pointer = binaryToDecimal(aux);
-    aux.clear();
 }
 
-void TCPv6::showTCPv6Header()
+void UDP::showUDPHeader()
 {
-    cout << "       Cabecera TCP" << endl;
+    cout << "\n ***Cabecera UDP***" << endl;
     cout << "Puerto de origen: " << source_port << " - ";
     setSourcePortService(source_port);
     cout << "Puerto de destino: " << destination_port << " - ";
     setDestinationPortService(destination_port);
-    cout << "Numero de secuencia: " << sequence_number << endl;
-    cout << "Numero de acuse de recibo: " << acknowledgment_number << endl;
-    cout << "Longitud de cabecera: " << offset << endl;
-    cout << "Reservado: " << reserved << endl;
-    cout << "Banderas: " << endl;
-    cout << "   -NS:  " << NS_flag;
-
-    if (NS_flag == 1)
-    {
-        cout << " - Activado" << endl;
-    }
-    else
-    {
-        cout << " - Desactivado" << endl;
-    }
-
-    cout << "   -CWR: " << CWR_flag;
-
-    if (CWR_flag == 1)
-    {
-        cout << " - Activado" << endl;
-    }
-    else
-    {
-        cout << " - Desactivado" << endl;
-    }
-
-    cout << "   -ECE: " << ECE_flag;
-
-    if (ECE_flag == 1)
-    {
-        cout << " - Activado" << endl;
-    }
-    else
-    {
-        cout << " - Desactivado" << endl;
-    }
-
-    cout << "   -URG: " << URG_flag;
-
-    if (URG_flag == 1)
-    {
-        cout << " - Activado" << endl;
-    }
-    else
-    {
-        cout << " - Desactivado" << endl;
-    }
-
-    cout << "   -ACK: " << ACK_flag;
-
-    if (ACK_flag == 1)
-    {
-        cout << " - Activado" << endl;
-    }
-    else
-    {
-        cout << " - Desactivado" << endl;
-    }
-
-    cout << "   -PSH: " << PSH_flag;
-
-    if (PSH_flag == 1)
-    {
-        cout << " - Activado" << endl;
-    }
-    else
-    {
-        cout << " - Desactivado" << endl;
-    }
-
-    cout << "   -RST: " << RST_flag;
-
-    if (RST_flag == 1)
-    {
-        cout << " - Activado" << endl;
-    }
-    else
-    {
-        cout << " - Desactivado" << endl;
-    }
-
-    cout << "   -SYN: " << SYN_flag;
-
-    if (SYN_flag == 1)
-    {
-        cout << " - Activado" << endl;
-    }
-    else
-    {
-        cout << " - Desactivado" << endl;
-    }
-
-    cout << "   -FIN: " << FIN_flag;
-
-    if (FIN_flag == 1)
-    {
-        cout << " - Activado" << endl;
-    }
-    else
-    {
-        cout << " - Desactivado" << endl;
-    }
-
-    cout << "Ventana de recepcion: " << window_size << " bytes" << endl;
+    cout << "Longitud total: " << length << " bytes" << endl;
     printf("Suma de verificacion: %02X\n", checksum);
-    cout << "Puntero urgente: " << urgent_pointer << " bytes" << endl;
 }
