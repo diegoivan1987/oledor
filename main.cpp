@@ -18,7 +18,7 @@ int main()
     vector<unsigned char> bytes;
     string binario;
 
-    bytes = archivo.leerArchivo("ethernet_ipv4_udp_dns.bin");
+    bytes = archivo.leerArchivo(".//Paquetes//ethernet_ipv4_udp_dns.bin");
     //Ethernet (14 bytes)
     if(bytes.size() != 0){
         ce.setCabecera(bytes);
@@ -54,24 +54,46 @@ int main()
             {
                 TCP *TCP_header4 = new TCP(272);
                 string data;
+                vector<unsigned char> TCP_remainder;
 
                 data = TCP_header4->toBinary(bytes);
                 TCP_header4->setTCPHeader(data);
                 TCP_header4->showTCPHeader();
 
+                //Se leyó hasta el byte 53, por lo que se empieza en el 54
+                for (size_t i = 54; i <= bytes.size(); i++)
+                {
+                    TCP_remainder.push_back(bytes[i]);
+                }
+                cout << "Resto de los datos: ";
+                for (size_t i = 0; i < TCP_remainder.size(); i++)
+                {
+                    printf("%02X ", TCP_remainder[i]);
+                }
             }
-
-            //UDP
+            //UDP bit 272 a 335, <= 335 (8 bytes)
             if (c4.getProtocolo() == "UDP")
             {
                 UDP *UDP_header4 = new UDP(272);
                 string data;
+                vector<unsigned char> TCP_remainder;
 
                 data = UDP_header4->toBinary(bytes);
                 UDP_header4->setUDPHeader(data);
                 UDP_header4->showUDPHeader();
+
+                for (size_t i = 42; i <= bytes.size(); i++)
+                {
+                    TCP_remainder.push_back(bytes[i]);
+                }
+                cout << "Resto de los datos: ";
+                for (size_t i = 0; i < TCP_remainder.size(); i++)
+                {
+                    printf("%02X ", TCP_remainder[i]);
+                }
             }
-            
+
+
         }
 
         //ARP - bit 112 a 335, <= 335 (28 bytes)
@@ -106,7 +128,7 @@ int main()
             headerIPv6.setIPv6Header(data);
             headerIPv6.showIPv6Header();
 
-            //IPv6 - bit 432 a 463, <= 463 (4 bytes)
+            //ICMPv6 - bit 432 a 463, <= 463 (4 bytes)
             if (headerIPv6.getNextHeader() == "ICMPv6")
             {
                 ICMPv6 headerICMPv6;
@@ -122,22 +144,46 @@ int main()
             {
                 TCP *TCP_header6 = new TCP(432);
                 string data;
+                vector<unsigned char> TCP_remainder;
 
                 data = TCP_header6->toBinary(bytes);
                 TCP_header6->setTCPHeader(data);
                 TCP_header6->showTCPHeader();
+
+                //Se leyó hasta el byte 73, por lo que se empieza en el 74
+                for (size_t i = 74; i <= bytes.size(); i++)
+                {
+                    TCP_remainder.push_back(bytes[i]);
+                }
+                cout << "Resto de los datos: ";
+                for (size_t i = 0; i < TCP_remainder.size(); i++)
+                {
+                    printf("%02X ", TCP_remainder[i]);
+                }
             }
 
-            //UDP-IPv6
+            //UDP-IPv6 bit 432 a 495, <= 591 (8 bytes)
             if (headerIPv6.getNextHeader() == "UDP")
             {
                 UDP *UDP_header6 = new UDP(432);
                 string data;
+                vector<unsigned char> TCP_remainder;
 
                 data = UDP_header6->toBinary(bytes);
                 UDP_header6->setUDPHeader(data);
-                UDP_header6->showUDPHeader();   
+                UDP_header6->showUDPHeader();
+
+                for (size_t i = 62; i <= bytes.size(); i++)
+                {
+                    TCP_remainder.push_back(bytes[i]);
+                }
+                cout << "Resto de los datos: ";
+                for (size_t i = 0; i < TCP_remainder.size(); i++)
+                {
+                    printf("%02X ", TCP_remainder[i]);
+                }
             }
+
         }
 
 
