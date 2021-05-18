@@ -307,3 +307,13 @@ void UDP::showUDPHeader()
     cout << "Longitud total: " << length << " bytes" << endl;
     printf("Suma de verificacion: %02X\n", checksum);
 }
+
+string UDP::getDestinationPort()
+{
+    return destination_port_service;
+}
+
+string UDP::getSourcePort()
+{
+    return source_port_service;
+}

@@ -9,6 +9,7 @@
 #include "cabeceraICMPv6.h"
 #include "cabeceraTCP.h"
 #include "cabeceraUDP.h"
+#include "cabeceraDNS.h"
 
 using namespace std;
 int main()
@@ -18,7 +19,7 @@ int main()
     vector<unsigned char> bytes;
     string binario;
 
-    bytes = archivo.leerArchivo(".//Paquetes//ethernet_ipv4_udp_dns.bin");
+    bytes = archivo.leerArchivo("ethernet_ipv4_udp_dns.bin");
     //Ethernet (14 bytes)
     if(bytes.size() != 0){
         ce.setCabecera(bytes);
@@ -60,7 +61,7 @@ int main()
                 TCP_header4->setTCPHeader(data);
                 TCP_header4->showTCPHeader();
 
-                //Se leyó hasta el byte 53, por lo que se empieza en el 54
+                //Se leyï¿½ hasta el byte 53, por lo que se empieza en el 54
                 for (size_t i = 54; i <= bytes.size(); i++)
                 {
                     TCP_remainder.push_back(bytes[i]);
@@ -90,6 +91,16 @@ int main()
                 for (size_t i = 0; i < TCP_remainder.size(); i++)
                 {
                     printf("%02X ", TCP_remainder[i]);
+                }
+
+                if (UDP_header4->getDestinationPort() == "DNS" || UDP_header4 ->getSourcePort() == "DNS")
+                {
+                    DNS *DNS_header4 = new DNS(336);
+                    string data;
+
+                    data = DNS_header4->toBinary(bytes);
+                    DNS_header4->setDNSHeader(data);
+                    DNS_header4->showDNSHeader();   
                 }
             }
 
@@ -150,7 +161,7 @@ int main()
                 TCP_header6->setTCPHeader(data);
                 TCP_header6->showTCPHeader();
 
-                //Se leyó hasta el byte 73, por lo que se empieza en el 74
+                //Se leyï¿½ hasta el byte 73, por lo que se empieza en el 74
                 for (size_t i = 74; i <= bytes.size(); i++)
                 {
                     TCP_remainder.push_back(bytes[i]);

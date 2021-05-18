@@ -25,6 +25,8 @@ public:
     void setSourcePortService(int port_value);
     void setDestinationPortService(int port_value);
     void showUDPHeader();
+    string getSourcePort();
+    string getDestinationPort();
 };
 
 #endif // UDP_H
