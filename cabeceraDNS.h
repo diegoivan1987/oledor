@@ -19,6 +19,10 @@ private:
     int RA;
     int Z;
     int rCode;
+    unsigned int QDCount;
+    unsigned int ANCount;
+    unsigned int NSCount;
+    unsigned int ARCount;
 public:
     DNS(size_t bit);
     ~DNS();

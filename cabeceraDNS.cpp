@@ -120,6 +120,51 @@ void DNS::setDNSHeader(const string& data)
 
     rCode = binaryToDecimal(aux);
     aux.clear();
+
+    //Contadores
+    //QDCount - 16 bits - Decimal sin signo
+    bitAcumulador += 16;
+    for (size_t i = bit; i <= bitAcumulador; i++)
+    {
+        aux += data[i];
+        bit++;
+    }
+
+    QDCount = binaryToDecimal(aux);
+    aux.clear();
+
+    //ANCount - 16 bits - Decimal sin signo
+    bitAcumulador += 16;
+    for (size_t i = bit; i <= bitAcumulador; i++)
+    {
+        aux += data[i];
+        bit++;
+    }
+
+    ANCount = binaryToDecimal(aux);
+    aux.clear();
+
+    //NSCount - 16 bits - Decimal sin signo
+    bitAcumulador += 16;
+    for (size_t i = bit; i <= bitAcumulador; i++)
+    {
+        aux += data[i];
+        bit++;
+    }
+
+    NSCount = binaryToDecimal(aux);
+    aux.clear();
+
+    //ARCount - 16 bits - Decimal sin signo
+    bitAcumulador += 16;
+    for (size_t i = bit; i <= bitAcumulador; i++)
+    {
+        aux += data[i];
+        bit++;
+    }
+
+    ARCount = binaryToDecimal(aux);
+    aux.clear();
 }
 
 void DNS::showDNSHeader()
@@ -244,4 +289,10 @@ void DNS::showDNSHeader()
         cout << " - Desconocido" << endl;
         break;
     }
+
+    cout << "Contadores: " << endl;
+    cout << "   -QDCount: " << QDCount  << " entrada(s)" << endl;
+    cout << "   -ANCount: " << ANCount  << " entrada(s)" << endl;
+    cout << "   -NSCount: " << NSCount  << " entrada(s)" << endl;
+    cout << "   -ARCount: " << ARCount  << " entrada(s)" << endl;
 }
