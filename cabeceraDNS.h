@@ -11,6 +11,14 @@ class DNS
 private:
     size_t bitAcumulador;
     int id;
+    int QR;
+    int op_code;
+    int AA;
+    int TC;
+    int RD;
+    int RA;
+    int Z;
+    int rCode;
 public:
     DNS(size_t bit);
     ~DNS();
