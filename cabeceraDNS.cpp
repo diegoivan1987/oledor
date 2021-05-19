@@ -30,7 +30,7 @@ int DNS::binaryToDecimal(const string& number)
 }
 
 //Procedimiento
-void DNS::setDNSHeader(const string& data)
+void DNS::setDNSHeader(const string& data, const vector<unsigned char>& domain_name)
 {
     int bit = bitAcumulador;
     bitAcumulador = bitAcumulador-1;

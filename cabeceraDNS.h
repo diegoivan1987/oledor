@@ -28,7 +28,7 @@ public:
     ~DNS();
     string toBinary(const vector<unsigned char>& bytes);
     int binaryToDecimal(const string& number);
-    void setDNSHeader(const string& data);
+    void setDNSHeader(const string& data, const vector<unsigned char>& domain_name);
     void showDNSHeader();
 };
 

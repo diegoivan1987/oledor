@@ -93,13 +93,19 @@ int main()
                     printf("%02X ", TCP_remainder[i]);
                 }
 
+                TCP_remainder.clear();
+                for (size_t i = 54; i <= bytes.size(); i++)
+                {
+                    TCP_remainder.push_back(bytes[i]);
+                }
+
                 if (UDP_header4->getDestinationPort() == "DNS" || UDP_header4 ->getSourcePort() == "DNS")
                 {
                     DNS *DNS_header4 = new DNS(336);
                     string data;
 
                     data = DNS_header4->toBinary(bytes);
-                    DNS_header4->setDNSHeader(data);
+                    DNS_header4->setDNSHeader(data, TCP_remainder);
                     DNS_header4->showDNSHeader();   
                 }
             }
