@@ -24,6 +24,7 @@ private:
     unsigned int NSCount;
     unsigned int ARCount;
     int Qtype;
+    int Qclass;
 public:
     DNS(size_t bit);
     ~DNS();

@@ -179,11 +179,14 @@ void DNS::setDNSHeader(const string& data, const vector<unsigned char>& domain_n
             aux_char = domain_name[i];     
         }
         cout << endl << i;
+        //Se incrementa el contador de los bytes para tomar en cuenta la ultima posicion del nombre de dominio
+        i++;
+        i = i*8;
         bitAcumulador += i;
         bit += i;
 
-        //Tipo - 2 bytes - Decimal
-        bitAcumulador += 2;
+        //Tipo - 16 bits - Decimal
+        bitAcumulador += 16;
         for (size_t i = bit; i <= bitAcumulador; i++)
         {
             aux += data[i];
@@ -191,6 +194,17 @@ void DNS::setDNSHeader(const string& data, const vector<unsigned char>& domain_n
         }
 
         Qtype = binaryToDecimal(aux);
+        aux.clear();
+
+        //Clase - 16 bits - Decimal
+        bitAcumulador += 16;
+        for (size_t i = bit; i <= bitAcumulador; i++)
+        {
+            aux += data[i];
+            bit++;
+        }
+
+        Qclass = binaryToDecimal(aux);
         aux.clear();
     }
 }
@@ -371,6 +385,23 @@ void DNS::showDNSHeader(const vector<unsigned char>& domain_name)
 
         case 23:
             cout << "NS" << endl;
+            break;
+        
+        default:
+            cout << "Valor desconocido" << endl;
+            break;
+        }
+
+        cout << "   -Clase: " << Qclass << " - ";
+
+        switch (Qclass)
+        {
+        case 1:
+            cout << "IN" << endl;
+            break;
+
+        case 3:
+            cout << "CH" << endl;
             break;
         
         default:
