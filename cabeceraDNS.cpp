@@ -30,7 +30,7 @@ int DNS::binaryToDecimal(const string& number)
 }
 
 //Procedimiento
-void DNS::setDNSHeader(const string& data, const vector<unsigned char>& domain_name)
+void DNS::setDNSHeader(const string& data)
 {
     int bit = bitAcumulador;
     bitAcumulador = bitAcumulador-1;
@@ -167,7 +167,7 @@ void DNS::setDNSHeader(const string& data, const vector<unsigned char>& domain_n
     aux.clear();
 }
 
-void DNS::showDNSHeader()
+void DNS::showDNSHeader(const vector<unsigned char>& domain_name)
 {
     cout << "\n\n ***Cabecera UDP***" << endl;
     printf("ID: %02X\n", id);
@@ -295,4 +295,28 @@ void DNS::showDNSHeader()
     cout << "   -ANCount: " << ANCount  << " entrada(s)" << endl;
     cout << "   -NSCount: " << NSCount  << " entrada(s)" << endl;
     cout << "   -ARCount: " << ARCount  << " entrada(s)" << endl;
+
+    //Campo de preguntaB
+    cout << endl << "Campo de pregunta" << endl;
+    cout << "   -Nombre de dominio: ";
+    if (QDCount > 0)
+    {
+        unsigned char aux_char;
+        int i = 0;
+        aux_char = domain_name[i];
+        while (aux_char != 0)
+        {
+            i++;
+            aux_char = domain_name[i];
+            if (aux_char >= 97 && aux_char <=122)
+            {
+                cout << aux_char;
+            }
+            else if (aux_char != 0)
+            {
+                cout << ".";
+            }      
+        }
+        cout << endl << i;
+    }
 }

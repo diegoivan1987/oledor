@@ -105,12 +105,10 @@ int main()
                     string data;
 
                     data = DNS_header4->toBinary(bytes);
-                    DNS_header4->setDNSHeader(data, TCP_remainder);
-                    DNS_header4->showDNSHeader();   
+                    DNS_header4->setDNSHeader(data);
+                    DNS_header4->showDNSHeader(TCP_remainder);   
                 }
             }
-
-
         }
 
         //ARP - bit 112 a 335, <= 335 (28 bytes)
@@ -198,6 +196,22 @@ int main()
                 for (size_t i = 0; i < TCP_remainder.size(); i++)
                 {
                     printf("%02X ", TCP_remainder[i]);
+                }
+
+                TCP_remainder.clear();
+                for (size_t i = 74; i <= bytes.size(); i++)
+                {
+                    TCP_remainder.push_back(bytes[i]);
+                }
+
+                if (UDP_header6->getDestinationPort() == "DNS" || UDP_header6 ->getSourcePort() == "DNS")
+                {
+                    DNS *DNS_header6 = new DNS(496);
+                    string data;
+
+                    data = DNS_header6->toBinary(bytes);
+                    DNS_header6->setDNSHeader(data);
+                    DNS_header6->showDNSHeader(TCP_remainder);   
                 }
             }
 

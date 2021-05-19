@@ -28,8 +28,8 @@ public:
     ~DNS();
     string toBinary(const vector<unsigned char>& bytes);
     int binaryToDecimal(const string& number);
-    void setDNSHeader(const string& data, const vector<unsigned char>& domain_name);
-    void showDNSHeader();
+    void setDNSHeader(const string& data);
+    void showDNSHeader(const vector<unsigned char>& domain_name);
 };
 
 #endif // DNS_H
