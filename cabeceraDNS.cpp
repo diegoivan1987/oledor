@@ -166,52 +166,59 @@ void DNS::setDNSHeader(const string& data, const vector<unsigned char>& domain_n
     ARCount = binaryToDecimal(aux);
     aux.clear();
 
+    showDNSHeader();
+
     //Campo de pregunta
     if (QDCount > 0)
     {
-        //Nombre de dominio - Longitud variable - La longitud total en bytes queda almacenada en i 
-        unsigned char aux_char;
-        int i = 0;
-        aux_char = domain_name[i];
-        while (aux_char != 0)
+        for (size_t a = 0; a < QDCount; a++)
         {
+            //Nombre de dominio - Longitud variable - La longitud total en bytes queda almacenada en i 
+            unsigned char aux_char;
+            int i = 0;
+            aux_char = domain_name[i];
+            while (aux_char != 0)
+            {
+                i++;
+                aux_char = domain_name[i];     
+            }
+
+            //Se incrementa el contador de los bytes para tomar en cuenta la ultima posicion del nombre de dominio
             i++;
-            aux_char = domain_name[i];     
+            i = i*8;
+            bitAcumulador += i;
+            bit += i;
+
+            //Tipo - 16 bits - Decimal
+            bitAcumulador += 16;
+            for (size_t i = bit; i <= bitAcumulador; i++)
+            {
+                aux += data[i];
+                bit++;
+            }
+
+            Qtype = binaryToDecimal(aux);
+            aux.clear();
+
+            //Clase - 16 bits - Decimal
+            bitAcumulador += 16;
+            for (size_t i = bit; i <= bitAcumulador; i++)
+            {
+                aux += data[i];
+                bit++;
+            }
+
+            Qclass = binaryToDecimal(aux);
+            aux.clear();
+
+            showDNSQuestions(domain_name);
         }
-        cout << endl << i;
-        //Se incrementa el contador de los bytes para tomar en cuenta la ultima posicion del nombre de dominio
-        i++;
-        i = i*8;
-        bitAcumulador += i;
-        bit += i;
-
-        //Tipo - 16 bits - Decimal
-        bitAcumulador += 16;
-        for (size_t i = bit; i <= bitAcumulador; i++)
-        {
-            aux += data[i];
-            bit++;
-        }
-
-        Qtype = binaryToDecimal(aux);
-        aux.clear();
-
-        //Clase - 16 bits - Decimal
-        bitAcumulador += 16;
-        for (size_t i = bit; i <= bitAcumulador; i++)
-        {
-            aux += data[i];
-            bit++;
-        }
-
-        Qclass = binaryToDecimal(aux);
-        aux.clear();
     }
 }
 
-void DNS::showDNSHeader(const vector<unsigned char>& domain_name)
+void DNS::showDNSHeader()
 {
-    cout << "\n\n ***Cabecera UDP***" << endl;
+    cout << "\n\n ***Cabecera DNS***" << endl;
     printf("ID: %02X\n", id);
 
     //Impresion de banderas
@@ -337,9 +344,12 @@ void DNS::showDNSHeader(const vector<unsigned char>& domain_name)
     cout << "   -ANCount: " << ANCount  << " entrada(s)" << endl;
     cout << "   -NSCount: " << NSCount  << " entrada(s)" << endl;
     cout << "   -ARCount: " << ARCount  << " entrada(s)" << endl;
+}
 
-    //Campo de preguntaB
-    cout << endl << "Campo de pregunta" << endl;
+void DNS::showDNSQuestions(const vector<unsigned char>& domain_name)
+{
+    //Campo de pregunta
+    cout << "Campo de pregunta" << endl;
     cout << "   -Nombre de dominio: ";
     if (QDCount > 0)
     {
