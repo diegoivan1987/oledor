@@ -66,10 +66,14 @@ int main()
                 {
                     TCP_remainder.push_back(bytes[i]);
                 }
-                cout << "Resto de los datos: ";
-                for (size_t i = 0; i < TCP_remainder.size(); i++)
+
+                if (TCP_header4->getPortSourceService() == "DNS" || TCP_header4->getPortDestinationService() == "DNS")
                 {
-                    printf("%02X ", TCP_remainder[i]);
+                    DNS *DNS_header4 = new DNS(432);
+                    string data;
+
+                    data = DNS_header4->toBinary(bytes);
+                    DNS_header4->setDNSHeader(data, TCP_remainder); 
                 }
             }
             //UDP bit 272 a 335, <= 335 (8 bytes)
@@ -86,11 +90,6 @@ int main()
                 for (size_t i = 42; i <= bytes.size(); i++)
                 {
                     TCP_remainder.push_back(bytes[i]);
-                }
-                cout << "Resto de los datos: ";
-                for (size_t i = 0; i < TCP_remainder.size(); i++)
-                {
-                    printf("%02X ", TCP_remainder[i]);
                 }
 
                 TCP_remainder.clear();
@@ -169,10 +168,14 @@ int main()
                 {
                     TCP_remainder.push_back(bytes[i]);
                 }
-                cout << "Resto de los datos: ";
-                for (size_t i = 0; i < TCP_remainder.size(); i++)
+
+                if (TCP_header6->getPortSourceService() == "DNS" || TCP_header6->getPortDestinationService() == "DNS")
                 {
-                    printf("%02X ", TCP_remainder[i]);
+                    DNS *DNS_header6 = new DNS(592);
+                    string data;
+
+                    data = DNS_header6->toBinary(bytes);
+                    DNS_header6->setDNSHeader(data, TCP_remainder); 
                 }
             }
 
@@ -190,11 +193,6 @@ int main()
                 for (size_t i = 62; i <= bytes.size(); i++)
                 {
                     TCP_remainder.push_back(bytes[i]);
-                }
-                cout << "Resto de los datos: ";
-                for (size_t i = 0; i < TCP_remainder.size(); i++)
-                {
-                    printf("%02X ", TCP_remainder[i]);
                 }
 
                 TCP_remainder.clear();

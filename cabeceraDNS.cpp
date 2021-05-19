@@ -214,6 +214,140 @@ void DNS::setDNSHeader(const string& data, const vector<unsigned char>& domain_n
             showDNSQuestions(domain_name);
         }
     }
+
+    //Campo de respuesta
+    if (ANCount > 0)
+    {
+        for (size_t a = 0; a < ANCount; a++)
+        {
+            //Nombre de dominio - Longitud variable - La longitud total en bytes queda almacenada en i 
+            unsigned char aux_char;
+            int i = 0;
+            aux_char = domain_name[i];
+            while (aux_char != 0)
+            {
+                i++;
+                aux_char = domain_name[i];     
+            }
+
+            //Se incrementa el contador de los bytes para tomar en cuenta la ultima posicion del nombre de dominio
+            i++;
+            i = i*8;
+            bitAcumulador += i;
+            bit += i;
+
+            //Tipo - 16 bits - Decimal
+            bitAcumulador += 16;
+            for (size_t i = bit; i <= bitAcumulador; i++)
+            {
+                aux += data[i];
+                bit++;
+            }
+
+            Atype = binaryToDecimal(aux);
+            aux.clear();
+
+            //Clase - 16 bits - Decimal
+            bitAcumulador += 16;
+            for (size_t i = bit; i <= bitAcumulador; i++)
+            {
+                aux += data[i];
+                bit++;
+            }
+
+            Aclass = binaryToDecimal(aux);
+            aux.clear();
+
+            //Tiempo de vida - 32 bits - Decimal
+            bitAcumulador += 32;
+            for (size_t i = bit; i <= bitAcumulador; i++)
+            {
+                aux += data[i];
+                bit++;
+            }
+            
+            Attl = binaryToDecimal(aux);
+            aux.clear();
+
+            //Longitud de datos - 16 bits - Decimal
+            bitAcumulador += 16;
+            for (size_t i = bit; i <= bitAcumulador; i++)
+            {
+                aux += data[i];
+                bit++;
+            }
+            
+            Alength = binaryToDecimal(aux);
+            aux.clear();
+
+            //RData - Depende del tipo
+            switch (Atype)
+            {
+            case 1:
+                //Respuesta - Debe de tener una direccion IP
+                bitAcumulador += 8;
+                for (size_t i = bit; i <= bitAcumulador; i++)
+                {
+                    aux += data[i];
+                    bit++;
+                }
+
+                AIP[0] = binaryToDecimal(aux);
+                aux.clear();
+
+                bitAcumulador += 8;
+                for (size_t i = bit; i <= bitAcumulador; i++)
+                {
+                    aux += data[i];
+                    bit++;
+                }
+
+                AIP[1] = binaryToDecimal(aux);
+                aux.clear();
+
+                bitAcumulador += 8;
+                for (size_t i = bit; i <= bitAcumulador; i++)
+                {
+                    aux += data[i];
+                    bit++;
+                }
+
+                AIP[2] = binaryToDecimal(aux);
+                aux.clear();
+                
+                bitAcumulador += 8;
+                for (size_t i = bit; i <= bitAcumulador; i++)
+                {
+                    aux += data[i];
+                    bit++;
+                }
+
+                AIP[3] = binaryToDecimal(aux);
+                aux.clear();
+                break;
+
+            case 15:
+                //Prioridad de MX - 16 bits
+                bitAcumulador += 16;
+                for (size_t i = bit; i <= bitAcumulador; i++)
+                {
+                    aux += data[i];
+                    bit++;
+                }
+
+                MXpriority = binaryToDecimal(aux);
+                aux.clear();
+                break;
+            
+            default:
+                break;
+            }
+
+            showDNSAnswers(domain_name);
+        }
+        
+    }
+    
 }
 
 void DNS::showDNSHeader()
@@ -418,5 +552,197 @@ void DNS::showDNSQuestions(const vector<unsigned char>& domain_name)
             cout << "Valor desconocido" << endl;
             break;
         }
+    }
+}
+
+void DNS::showDNSAnswers(const vector<unsigned char>& domain_name)
+{
+     //Campo de respuesta
+    cout << "Campo de respuesta" << endl;
+    cout << "   -Nombre de dominio: ";
+    if (ANCount > 0)
+    {
+        unsigned char aux_char;
+        int i = 0;
+        aux_char = domain_name[i];
+        while (aux_char != 0)
+        {
+            i++;
+            aux_char = domain_name[i];
+            if (aux_char >= 97 && aux_char <=122)
+            {
+                cout << aux_char;
+            }
+            else if (aux_char != 0)
+            {
+                cout << ".";
+            }      
+        }
+        i++;
+
+        cout << endl << "   -Tipo: " << Atype << " - ";
+        switch (Atype)
+        {
+        case 1:
+            cout << "A" << endl;
+            break;
+
+        case 5:
+            cout << "CNAME" << endl;
+            break;
+
+        case 13:
+            cout << "HINFO" << endl;
+            break;
+
+        case 15:
+            cout << "MX" << endl;
+            break;
+
+        case 22:
+            cout << "NS" << endl;
+            break;
+
+        case 23:
+            cout << "NS" << endl;
+            break;
+        
+        default:
+            cout << "Valor desconocido" << endl;
+            break;
+        }
+
+        cout << "   -Clase: " << Aclass << " - ";
+
+        switch (Aclass)
+        {
+        case 1:
+            cout << "IN" << endl;
+            break;
+
+        case 3:
+            cout << "CH" << endl;
+            break;
+        
+        default:
+            cout << "Valor desconocido" << endl;
+            break;
+        }
+
+        cout << "   -Tiempo de vida: " << Attl << " segundos" << endl;
+        cout << "   -Longitud de datos: " << Alength << " bytes" << endl;
+
+        i = i + 10;
+
+        cout << "   -RDATA: " << endl;
+        switch (Atype)
+        {
+        case 1:
+            cout << "       A: " << AIP[0] << "." << AIP[1] << "." << AIP[2] << "." << AIP[3];
+            break;
+
+        case 5:
+            cout << "       CNAME: " ;
+            unsigned char aux_char;
+            aux_char = domain_name[i];
+            while (aux_char != 0)
+            {
+                i++;
+                aux_char = domain_name[i];
+                if (aux_char >= 97 && aux_char <=122)
+                {
+                    cout << aux_char;
+                }
+                else if (aux_char != 0)
+                {
+                    cout << ".";
+                }      
+            }
+            break;
+
+        case 6:
+            cout << "       SOA" << endl;
+            break;
+
+        case 12:
+            cout << "       PTR: " << endl;
+            aux_char = domain_name[i];
+            while (aux_char != 0)
+            {
+                i++;
+                aux_char = domain_name[i];
+                if (aux_char >= 97 && aux_char <=122)
+                {
+                    cout << aux_char;
+                }
+                else if (aux_char != 0)
+                {
+                    cout << ".";
+                }      
+            }
+            break;
+
+        case 15:
+            cout << "       MX: " << endl;
+            cout << "           Prioridad: " << MXpriority << endl;
+            cout << "           Nombre del ordenador: ";
+            i = i + 2;
+            aux_char = domain_name[i];
+            while (aux_char != 0)
+            {
+                i++;
+                aux_char = domain_name[i];
+                if (aux_char >= 97 && aux_char <=122)
+                {
+                    cout << aux_char;
+                }
+                else if (aux_char != 0)
+                {
+                    cout << ".";
+                }      
+            }
+            break;
+
+        case 22:
+            cout << "       NS: ";
+            aux_char = domain_name[i];
+            while (aux_char != 0)
+            {
+                i++;
+                aux_char = domain_name[i];
+                if (aux_char >= 97 && aux_char <=122)
+                {
+                    cout << aux_char;
+                }
+                else if (aux_char != 0)
+                {
+                    cout << ".";
+                }      
+            }
+            break;
+
+        case 23:
+            cout << "       NS: ";
+            aux_char = domain_name[i];
+            while (aux_char != 0)
+            {
+                i++;
+                aux_char = domain_name[i];
+                if (aux_char >= 97 && aux_char <=122)
+                {
+                    cout << aux_char;
+                }
+                else if (aux_char != 0)
+                {
+                    cout << ".";
+                }      
+            }
+            break;
+        
+        default:
+            cout << "Valor desconocido" << endl;
+            break;
+        }
+
     }
 }

@@ -541,3 +541,13 @@ void TCP::showTCPHeader()
     printf("Suma de verificacion: %02X\n", checksum);
     cout << "Puntero urgente: " << urgent_pointer << " bytes" << endl;
 }
+
+string TCP::getPortSourceService()
+{
+    return source_port_service;
+}
+
+string TCP::getPortDestinationService()
+{
+    return destination_port_service;
+}

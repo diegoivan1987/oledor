@@ -25,6 +25,13 @@ private:
     unsigned int ARCount;
     int Qtype;
     int Qclass;
+    int Atype;
+    int Aclass;
+    int Attl;
+    int Alength;
+    int AIP[3];
+    int MXpriority;
+
 public:
     DNS(size_t bit);
     ~DNS();
@@ -33,6 +40,7 @@ public:
     void setDNSHeader(const string& data, const vector<unsigned char>& domain_name);
     void showDNSHeader();
     void showDNSQuestions(const vector<unsigned char>& domain_name);
+    void showDNSAnswers(const vector<unsigned char>& domain_name);
 };
 
 #endif // DNS_H
