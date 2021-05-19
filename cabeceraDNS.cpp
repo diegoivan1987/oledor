@@ -515,6 +515,14 @@ void DNS::showDNSQuestions(const vector<unsigned char>& domain_name)
             cout << "CNAME" << endl;
             break;
 
+        case 6:
+            cout << "SOA" << endl;
+            break;
+
+        case 12:
+            cout << "PTR: " << endl;
+            break;
+
         case 13:
             cout << "HINFO" << endl;
             break;
@@ -589,6 +597,14 @@ void DNS::showDNSAnswers(const vector<unsigned char>& domain_name)
 
         case 5:
             cout << "CNAME" << endl;
+            break;
+
+        case 6:
+            cout << "SOA" << endl;
+            break;
+
+        case 12:
+            cout << "PTR: " << endl;
             break;
 
         case 13:
