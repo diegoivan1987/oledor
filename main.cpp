@@ -105,7 +105,7 @@ int main()
                     string data;
 
                     data = DNS_header4->toBinary(bytes);
-                    DNS_header4->setDNSHeader(data);
+                    DNS_header4->setDNSHeader(data, TCP_remainder);
                     DNS_header4->showDNSHeader(TCP_remainder);   
                 }
             }
@@ -210,7 +210,7 @@ int main()
                     string data;
 
                     data = DNS_header6->toBinary(bytes);
-                    DNS_header6->setDNSHeader(data);
+                    DNS_header6->setDNSHeader(data, TCP_remainder);
                     DNS_header6->showDNSHeader(TCP_remainder);   
                 }
             }

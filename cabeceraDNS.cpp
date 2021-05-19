@@ -30,7 +30,7 @@ int DNS::binaryToDecimal(const string& number)
 }
 
 //Procedimiento
-void DNS::setDNSHeader(const string& data)
+void DNS::setDNSHeader(const string& data, const vector<unsigned char>& domain_name)
 {
     int bit = bitAcumulador;
     bitAcumulador = bitAcumulador-1;
@@ -165,6 +165,34 @@ void DNS::setDNSHeader(const string& data)
 
     ARCount = binaryToDecimal(aux);
     aux.clear();
+
+    //Campo de pregunta
+    if (QDCount > 0)
+    {
+        //Nombre de dominio - Longitud variable - La longitud total en bytes queda almacenada en i 
+        unsigned char aux_char;
+        int i = 0;
+        aux_char = domain_name[i];
+        while (aux_char != 0)
+        {
+            i++;
+            aux_char = domain_name[i];     
+        }
+        cout << endl << i;
+        bitAcumulador += i;
+        bit += i;
+
+        //Tipo - 2 bytes - Decimal
+        bitAcumulador += 2;
+        for (size_t i = bit; i <= bitAcumulador; i++)
+        {
+            aux += data[i];
+            bit++;
+        }
+
+        Qtype = binaryToDecimal(aux);
+        aux.clear();
+    }
 }
 
 void DNS::showDNSHeader(const vector<unsigned char>& domain_name)
@@ -317,6 +345,37 @@ void DNS::showDNSHeader(const vector<unsigned char>& domain_name)
                 cout << ".";
             }      
         }
-        cout << endl << i;
+
+        cout << endl << "   -Tipo: " << Qtype << " - ";
+        switch (Qtype)
+        {
+        case 1:
+            cout << "A" << endl;
+            break;
+
+        case 5:
+            cout << "CNAME" << endl;
+            break;
+
+        case 13:
+            cout << "HINFO" << endl;
+            break;
+
+        case 15:
+            cout << "MX" << endl;
+            break;
+
+        case 22:
+            cout << "NS" << endl;
+            break;
+
+        case 23:
+            cout << "NS" << endl;
+            break;
+        
+        default:
+            cout << "Valor desconocido" << endl;
+            break;
+        }
     }
 }
