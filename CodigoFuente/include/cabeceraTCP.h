@@ -42,6 +42,8 @@ public:
     void setSourcePortService(int port_value);
     void setDestinationPortService(int port_value);
     void showTCPHeader();
+    string getPortSourceService();
+    string getPortDestinationService();
 };
 
 #endif // TCP_H

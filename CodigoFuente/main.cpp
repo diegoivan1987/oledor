@@ -1,3 +1,4 @@
+
 #include <iostream>
 #include "Archivo.h"
 #include "CabeceraEthernet.h"
@@ -8,17 +9,22 @@
 #include "cabeceraIPv6.h"
 #include "cabeceraICMPv6.h"
 #include "cabeceraTCP.h"
+#include "cabeceraUDP.h"
+#include "cabeceraDNS.h"
+#include "PCAP_CLASS.h"
 
-using namespace std;
-int main()
-{
-    Archivo archivo;
-    CabeceraEthernet ce;
-    vector<unsigned char> bytes;
-    string binario;
+// Usar pktdump_ex
 
-    bytes = archivo.leerArchivo(".//Paquetes//ethernet_ipv4_tcp.bin");
+void readingHeader(vector<unsigned char> bytes){
+
+    //Esto para imprimir los datos del vector recibido
+    /*for(size_t j = 0; j < bytes.size(); j++){
+        printf("%.2X ", bytes[j]);
+    }*/
+
     //Ethernet (14 bytes)
+    CabeceraEthernet ce;
+    string binario;
     if(bytes.size() != 0){
         ce.setCabecera(bytes);
         cout << endl << "***Cabecera Ethernet***" << endl;
@@ -59,21 +65,52 @@ int main()
                 TCP_header4->setTCPHeader(data);
                 TCP_header4->showTCPHeader();
 
-                //Se leyó hasta el byte 53, por lo que se empieza en el 54
+                //Se leyï¿½ hasta el byte 53, por lo que se empieza en el 54
                 for (size_t i = 54; i <= bytes.size(); i++)
                 {
                     TCP_remainder.push_back(bytes[i]);
                 }
 
-                cout << "Resto de los datos: ";
-
-                for (size_t i = 0; i < TCP_remainder.size(); i++)
+                if (TCP_header4->getPortSourceService() == "DNS" || TCP_header4->getPortDestinationService() == "DNS")
                 {
-                    printf("%02X ", TCP_remainder[i]);
+                    DNS *DNS_header4 = new DNS(432);
+                    string data;
+
+                    data = DNS_header4->toBinary(bytes);
+                    DNS_header4->setDNSHeader(data, TCP_remainder);
                 }
             }
+            //UDP bit 272 a 335, <= 335 (8 bytes)
+            if (c4.getProtocolo() == "UDP")
+            {
+                UDP *UDP_header4 = new UDP(272);
+                string data;
+                vector<unsigned char> TCP_remainder;
 
+                data = UDP_header4->toBinary(bytes);
+                UDP_header4->setUDPHeader(data);
+                UDP_header4->showUDPHeader();
 
+                for (size_t i = 42; i <= bytes.size(); i++)
+                {
+                    TCP_remainder.push_back(bytes[i]);
+                }
+
+                TCP_remainder.clear();
+                for (size_t i = 54; i <= bytes.size(); i++)
+                {
+                    TCP_remainder.push_back(bytes[i]);
+                }
+
+                if (UDP_header4->getDestinationPort() == "DNS" || UDP_header4 ->getSourcePort() == "DNS")
+                {
+                    DNS *DNS_header4 = new DNS(336);
+                    string data;
+
+                    data = DNS_header4->toBinary(bytes);
+                    DNS_header4->setDNSHeader(data, TCP_remainder);
+                }
+            }
         }
 
         //ARP - bit 112 a 335, <= 335 (28 bytes)
@@ -108,7 +145,7 @@ int main()
             headerIPv6.setIPv6Header(data);
             headerIPv6.showIPv6Header();
 
-            //IPv6 - bit 432 a 463, <= 463 (4 bytes)
+            //ICMPv6 - bit 432 a 463, <= 463 (4 bytes)
             if (headerIPv6.getNextHeader() == "ICMPv6")
             {
                 ICMPv6 headerICMPv6;
@@ -130,17 +167,51 @@ int main()
                 TCP_header6->setTCPHeader(data);
                 TCP_header6->showTCPHeader();
 
-                //Se leyó hasta el byte 73, por lo que se empieza en el 74
+                //Se leyï¿½ hasta el byte 73, por lo que se empieza en el 74
                 for (size_t i = 74; i <= bytes.size(); i++)
                 {
                     TCP_remainder.push_back(bytes[i]);
                 }
 
-                cout << "Resto de los datos: ";
-
-                for (size_t i = 0; i < TCP_remainder.size(); i++)
+                if (TCP_header6->getPortSourceService() == "DNS" || TCP_header6->getPortDestinationService() == "DNS")
                 {
-                    printf("%02X ", TCP_remainder[i]);
+                    DNS *DNS_header6 = new DNS(592);
+                    string data;
+
+                    data = DNS_header6->toBinary(bytes);
+                    DNS_header6->setDNSHeader(data, TCP_remainder);
+                }
+            }
+
+            //UDP-IPv6 bit 432 a 495, <= 591 (8 bytes)
+            if (headerIPv6.getNextHeader() == "UDP")
+            {
+                UDP *UDP_header6 = new UDP(432);
+                string data;
+                vector<unsigned char> TCP_remainder;
+
+                data = UDP_header6->toBinary(bytes);
+                UDP_header6->setUDPHeader(data);
+                UDP_header6->showUDPHeader();
+
+                for (size_t i = 62; i <= bytes.size(); i++)
+                {
+                    TCP_remainder.push_back(bytes[i]);
+                }
+
+                TCP_remainder.clear();
+                for (size_t i = 74; i <= bytes.size(); i++)
+                {
+                    TCP_remainder.push_back(bytes[i]);
+                }
+
+                if (UDP_header6->getDestinationPort() == "DNS" || UDP_header6 ->getSourcePort() == "DNS")
+                {
+                    DNS *DNS_header6 = new DNS(496);
+                    string data;
+
+                    data = DNS_header6->toBinary(bytes);
+                    DNS_header6->setDNSHeader(data, TCP_remainder);
                 }
             }
 
@@ -152,7 +223,26 @@ int main()
     }
 
     cout << endl;
-    system("pause");
+    //system("pause");
 
+}
+
+
+
+using namespace std;
+int main(int argc, char **argv)
+{
+    PCAP_CLASS pcap;
+    pcap.workPCAP(argc, argv);
+
+    vector<vector<unsigned char>> bytes;
+    bytes = pcap.getReading();
+
+    cout << "Size: " << bytes.size() << endl;
+    for(size_t i = 0; i < bytes.size(); i++){
+        readingHeader(bytes.at(i));
+    }
+
+    system("pause");
     return 0;
 }
