@@ -96,6 +96,7 @@ int PCAP_CLASS::workPCAP(int argc, char **argv)
 
 	/* Read the packets */
 	int cont = 0;
+	system("cls");
 	cout << endl << "Leyendo Paquetes..." << endl;
 	/***Comente las impresiones de los datos, tienen 5 astediscos -> *****/
 	while((res = pcap_next_ex( fp, &header, &pkt_data)) >= 0 && cont != NUM_PACKAGES)

@@ -22,7 +22,12 @@ string IPv6::toBinary(vector<unsigned char> bytes)
 int IPv6::binaryToDecimal(string number)
 {
     int total;
-    total = stoull(number, 0, 2);
+
+    try{
+        total = stoull(number, 0, 2);
+    }catch(std::invalid_argument& ia){
+        cout << endl << "Wrong data composition: " << ia.what() << endl;
+    }
     return total;
 }
 
@@ -31,46 +36,46 @@ string IPv6::trafficClassPriority(string bits)
 {
     if (bits == "000")
     {
-        return "De Rutina";
+        return "    De Rutina";
     }
 
     if (bits == "001")
     {
-        return "Prioritario";
+        return "    Prioritario";
     }
 
     if (bits == "010")
     {
-        return "Inmediato";
+        return "    Inmediato";
     }
 
     if (bits == "011")
     {
-        return "Relampago";
+        return "    Relampago";
     }
 
     if (bits == "100")
     {
-        return "Invalidacion Relampago";
+        return "    Invalidacion Relampago";
     }
 
     if (bits == "101")
     {
-        return "Procesando llamada critica o de emergencia";
+        return "    Procesando llamada critica o de emergencia";
     }
 
     if (bits == "110")
     {
-        return "Control de trabajo de internet";
+        return "    Control de trabajo de internet";
     }
 
     if (bits == "111")
     {
-        return "Control de red";
+        return "    Control de red";
     }
     else
     {
-        return "Prioridad desconocida";
+        return "    Prioridad desconocida";
     }
 }
 
@@ -78,32 +83,32 @@ void IPv6::trafficClassFeatures(string bits)
 {
     if(bits[0] == '0')
     {
-        cout << "   -Retardo: Normal" << endl;
+        cout << "       -Retardo: Normal" << endl;
     }
 
     if(bits[0] == '1')
     {
-        cout <<  "  -Retardo: Bajo" << endl;
+        cout <<  "      -Retardo: Bajo" << endl;
     }
 
     if(bits[1] == '0')
     {
-        cout << "   -Rendimiento: Normal" << endl;
+        cout << "       -Rendimiento: Normal" << endl;
     }
 
     if(bits[1] == '1')
     {
-        cout << "   -Rendimiento: Alto" << endl;
+        cout << "       -Rendimiento: Alto" << endl;
     }
 
     if(bits[2] == '0')
     {
-        cout << "   -Fiabilidad: Normal" << endl;
+        cout << "       -Fiabilidad: Normal" << endl;
     }
 
     if(bits[2] == '1')
     {
-        cout << "   -Fiabilidad: Alta" << endl;
+        cout << "       -Fiabilidad: Alta" << endl;
     }
 }
 
@@ -176,7 +181,7 @@ void IPv6::setIPv6Header(string data)
 
     flow_label = binaryToDecimal(ipv6_flowLabel);
 
-    //TamaÃ±o de datos - 16 bits - Decimal
+    //Tamaño de datos - 16 bits - Decimal
     string ipv6_payloadLength;
 
     for (size_t i = bit; i <= 159; i++)
@@ -536,8 +541,8 @@ void IPv6::setIPv6Header(string data)
 
 void IPv6::showIPv6Header()
 {
-    cout << "       Cabecera IPv6" << endl;
-    cout << "Version: " << version << endl;
+    cout << "\n       ***Cabecera IPv6***" << endl;
+    cout << "   Version: " << version << endl;
 
     string priority, features;
     for (size_t i = 0; i < traffic_class.size(); i++)
@@ -552,19 +557,19 @@ void IPv6::showIPv6Header()
         }
     }
 
-    cout << "Prioridad: " <<  priority << " - "  << trafficClassPriority(priority) << endl;
-    cout << "Caracteristicas del servicio: " << endl;
+    cout << "   Prioridad: " <<  priority << " - "  << trafficClassPriority(priority) << endl;
+    cout << "   Caracteristicas del servicio: " << endl;
     trafficClassFeatures(features);
-    cout << "Etiqueta de flujo: " << flow_label << endl;
-    cout << "Longitud de datos: " << payload_length << " bytes" << endl;
+    cout << "   Etiqueta de flujo: " << flow_label << endl;
+    cout << "   Longitud de datos: " << payload_length << " bytes" << endl;
     next_header_aux = nextHeader(next_header);
-    cout << "Encabezado siguiente: " << next_header_aux << endl;
-    cout << "Limite de salto: " << hop_limit << endl;
-    printf("Direccion de origen: %02X%02X:%02X%02X:%02X%02X:%02X%02X:%02X%02X:%02X%02X:%02X%02X:%02X%02X\n",
+    cout << "   Encabezado siguiente: " << next_header_aux << endl;
+    cout << "   Limite de salto: " << hop_limit << endl;
+    printf("    Direccion de origen: %02X%02X:%02X%02X:%02X%02X:%02X%02X:%02X%02X:%02X%02X:%02X%02X:%02X%02X\n",
             source_address[0], source_address[1], source_address[2], source_address[3], source_address[4],
             source_address[5], source_address[6], source_address[7], source_address[8], source_address[9],
             source_address[10], source_address[11], source_address[12], source_address[13], source_address[14], source_address[15]);
-    printf("Direccion de destino: %02X%02X:%02X%02X:%02X%02X:%02X%02X:%02X%02X:%02X%02X:%02X%02X:%02X%02X\n",
+    printf("    Direccion de destino: %02X%02X:%02X%02X:%02X%02X:%02X%02X:%02X%02X:%02X%02X:%02X%02X:%02X%02X\n",
         destination_address[0], destination_address[1], destination_address[2], destination_address[3], destination_address[4],
         destination_address[5], destination_address[6], destination_address[7], destination_address[8], destination_address[9],
         destination_address[10], destination_address[11], destination_address[12], destination_address[13], destination_address[14], destination_address[15]);

@@ -34,51 +34,51 @@ void ICMPv4::setICMPv4(string bin)
 
 void ICMPv4::mostrarICMPv4()
 {
-    cout << endl << "***ICMPv4***" << endl;
-    cout << "Mensaje Informativo: ";
+    cout << endl <<         "***ICMPv4***" << endl;
+    cout << "       Mensaje Informativo: ";
     setMensajeInformativo(tipo);
-    cout << "Mensaje de error: ";
+    cout << "       Mensaje de error: ";
     setMensajeError(codigo);
-    printf("Checksum: %02X", checksum);
+    printf("        Checksum: %02X", checksum);
 }
 
 void ICMPv4::setMensajeInformativo(int tipo)
 {
     switch(tipo){
-        case 0: cout << "Echo Reply (Respuesta de eco)" << endl; break;
-        case 3: cout << "Destination Unreacheable (destino inaccesible)" << endl; break;
-        case 4: cout << "Source Quench (disminución del tráfico desde el origen)" << endl; break;
-        case 5: cout << "Redirect (redireccionar - cambio de ruta)" << endl; break;
-        case 8: cout << "Echo (solicitud de eco)" << endl; break;
-        case 11: cout << "Time Exceeded (tiempo excedido para un datagrama)" << endl; break;
-        case 12: cout << "Parameter Problem (problema de parámetros)" << endl; break;
-        case 13: cout << "Timestamp (solicitud de marca de tiempo)" << endl; break;
-        case 14: cout << "Timestamp Reply (respuesta de marca de tiempo)" << endl; break;
-        case 15: cout << "Information Request (solicitud de información) - obsoleto-" << endl; break;
-        case 16: cout << "Information Reply (respuesta de información) - obsoleto-" << endl; break;
-        case 17: cout << "Addressmask (solicitud de máscara de dirección)" << endl; break;
-        case 18: cout << "Addressmask Reply (respuesta de máscara de dirección)" << endl; break;
-        default : cout << "Numero erroneo." << endl;
+        case 0: cout << "       Echo Reply (Respuesta de eco)" << endl; break;
+        case 3: cout << "       Destination Unreacheable (destino inaccesible)" << endl; break;
+        case 4: cout << "       Source Quench (disminuciï¿½n del trï¿½fico desde el origen)" << endl; break;
+        case 5: cout << "       Redirect (redireccionar - cambio de ruta)" << endl; break;
+        case 8: cout << "       Echo (solicitud de eco)" << endl; break;
+        case 11: cout << "      Time Exceeded (tiempo excedido para un datagrama)" << endl; break;
+        case 12: cout << "      Parameter Problem (problema de parï¿½metros)" << endl; break;
+        case 13: cout << "      Timestamp (solicitud de marca de tiempo)" << endl; break;
+        case 14: cout << "      Timestamp Reply (respuesta de marca de tiempo)" << endl; break;
+        case 15: cout << "      Information Request (solicitud de informaciï¿½n) - obsoleto-" << endl; break;
+        case 16: cout << "      Information Reply (respuesta de informaciï¿½n) - obsoleto-" << endl; break;
+        case 17: cout << "      Addressmask (solicitud de mï¿½scara de direcciï¿½n)" << endl; break;
+        case 18: cout << "      Addressmask Reply (respuesta de mï¿½scara de direcciï¿½n)" << endl; break;
+        default : cout << "     Numero erroneo." << endl;
     }
 }
 
 void ICMPv4::setMensajeError(int codigo)
 {
     switch(codigo){
-        case 0: cout << "no se puede llegar a la red" << endl; break;
-        case 1: cout << "no se puede llegar al host o aplicación de destino" << endl; break;
-        case 2: cout << "el destino no dispone del protocolo solicitado" << endl; break;
-        case 3: cout << "no se puede llegar al puerto destino o la aplicación destino no está libre" << endl; break;
-        case 4: cout << "se necesita aplicar fragmentación, pero el flag correspondiente indica lo contrario" << endl; break;
-        case 5: cout << "la ruta de origen no es correcta" << endl; break;
-        case 6: cout << "no se conoce la red destino" << endl; break;
-        case 7: cout << "no se conoce el host destino" << endl; break;
-        case 8: cout << "el host origen está aislado" << endl; break;
-        case 9: cout << "la comunicación con la red destino está prohibida por razones administrativas" << endl; break;
-        case 10: cout << "la comunicación con el host destino está prohibida por razones administrativas" << endl; break;
-        case 11: cout << "no se puede llegar a la red destino debido al Tipo de servicio" << endl; break;
-        case 12: cout << "no se puede llegar al host destino debido al Tipo de servicio" << endl; break;
-        default: cout << "Numero erroneo." << endl;
+        case 0: cout << "       no se puede llegar a la red" << endl; break;
+        case 1: cout << "       no se puede llegar al host o aplicaciï¿½n de destino" << endl; break;
+        case 2: cout << "       el destino no dispone del protocolo solicitado" << endl; break;
+        case 3: cout << "       no se puede llegar al puerto destino o la aplicaciï¿½n destino no estï¿½ libre" << endl; break;
+        case 4: cout << "       se necesita aplicar fragmentaciï¿½n, pero el flag correspondiente indica lo contrario" << endl; break;
+        case 5: cout << "       la ruta de origen no es correcta" << endl; break;
+        case 6: cout << "       no se conoce la red destino" << endl; break;
+        case 7: cout << "       no se conoce el host destino" << endl; break;
+        case 8: cout << "       el host origen estï¿½ aislado" << endl; break;
+        case 9: cout << "       la comunicaciï¿½n con la red destino estï¿½ prohibida por razones administrativas" << endl; break;
+        case 10: cout << "      la comunicaciï¿½n con el host destino estï¿½ prohibida por razones administrativas" << endl; break;
+        case 11: cout << "      no se puede llegar a la red destino debido al Tipo de servicio" << endl; break;
+        case 12: cout << "      no se puede llegar al host destino debido al Tipo de servicio" << endl; break;
+        default: cout << "      Numero erroneo." << endl;
     }
 }
 

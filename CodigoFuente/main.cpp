@@ -16,12 +16,6 @@
 // Usar pktdump_ex
 
 void readingHeader(vector<unsigned char> bytes){
-
-    //Esto para imprimir los datos del vector recibido
-    /*for(size_t j = 0; j < bytes.size(); j++){
-        printf("%.2X ", bytes[j]);
-    }*/
-
     //Ethernet (14 bytes)
     CabeceraEthernet ce;
     string binario;
@@ -30,13 +24,15 @@ void readingHeader(vector<unsigned char> bytes){
         cout << endl << "***Cabecera Ethernet***" << endl;
         cout << "Direccion Destino: ";
         ce.mostrarCampo(ce.getDirDestino());
+        printf("\n");
         cout << "Direccion Origen: ";
         ce.mostrarCampo(ce.getDirOrigen());
+        printf("\n");
         cout << "Tipo: ";
         ce.mostrarCampo(ce.getTipo_Long());
 
         ce.setTipo(ce.getTipo_Long());
-        cout << "   *" << ce.getTipo() << endl;
+        cout << " - " << ce.getTipo() << endl;
 
 
         //IPv4 - bit 112 a 271, <= 271 (20 bytes)
@@ -240,7 +236,9 @@ int main(int argc, char **argv)
 
     cout << "Size: " << bytes.size() << endl;
     for(size_t i = 0; i < bytes.size(); i++){
+        cout << endl << "Paquete " << i + 1;
         readingHeader(bytes.at(i));
+        cout << "*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-" << endl;
     }
 
     system("pause");

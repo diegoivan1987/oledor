@@ -16,9 +16,14 @@ void CabeceraEthernet::setCabecera(vector<unsigned char> bytes){
 
 void CabeceraEthernet::mostrarCampo(vector<unsigned char> campo){
     for(size_t i = 0; i < campo.size(); i++){
-        printf("%02X:", campo.at(i));
+        if (i == (campo.size() - 1))
+        {
+            printf("%02X", campo.at(i));
+        }
+        else{
+            printf("%02X:", campo.at(i));
+        }
     }
-    printf("\n");
 }
 
 void CabeceraEthernet::setTipo(vector<unsigned char> campo){

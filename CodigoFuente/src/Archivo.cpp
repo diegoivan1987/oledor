@@ -26,7 +26,3 @@ vector<unsigned char> Archivo::leerArchivo(string nomArchivo){
 
     return bytes;
 }
-
-
-
-

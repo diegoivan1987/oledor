@@ -25,7 +25,12 @@ string TCP::toBinary(vector<unsigned char> bytes)
 int TCP::binaryToDecimal(string number)
 {
     int total;
-    total = stoull(number, 0, 2);
+
+    try{
+        total = stoull(number, 0, 2);
+    }catch(std::invalid_argument& ia){
+        cout << endl << "Wrong data composition: " << ia.what() << endl;
+    }
     return total;
 }
 
@@ -41,107 +46,107 @@ void TCP::setSourcePortService(int port_value)
 {
     if (port_value >= 0 && port_value <= 1023)
     {
-        cout << "Puerto bien conocido" << " - " << endl;
+        cout << " Puerto bien conocido" << " - " << endl;
 
         if (port_value == 20)
         {
             source_port_service = "FTP";
-            cout << source_port_service << endl;
+            cout << "       " << source_port_service << endl;
         }
 
         if (port_value == 21)
         {
             source_port_service = "FTP";
-            cout << source_port_service << endl;
+            cout << "       " << source_port_service << endl;
         }
 
         if (port_value == 22)
         {
             source_port_service = "SSH";
-            cout << source_port_service << endl;
+            cout << "       " << source_port_service << endl;
         }
 
         if (port_value == 23)
         {
             source_port_service = "TELNET";
-            cout << source_port_service << endl;
+            cout << "       " << source_port_service << endl;
         }
 
         if (port_value == 25)
         {
             source_port_service = "SMTP";
-            cout << source_port_service << endl;
+            cout << "       " << source_port_service << endl;
         }
 
         if (port_value == 53)
         {
             source_port_service = "DNS";
-            cout << source_port_service << endl;
+            cout << "       " << source_port_service << endl;
         }
 
         if (port_value == 67)
         {
             source_port_service = "DHCP";
-            cout << source_port_service << endl;
+            cout << "       " << source_port_service << endl;
         }
 
         if (port_value == 68)
         {
             source_port_service = "DHCP";
-            cout << source_port_service << endl;
+            cout << "       " << source_port_service << endl;
         }
 
         if (port_value == 69)
         {
             source_port_service = "TFTP";
-            cout << source_port_service << endl;
+            cout << "       " << source_port_service << endl;
         }
 
         if (port_value == 80)
         {
             source_port_service = "HTTP";
-            cout << source_port_service << endl;
+            cout << "       " << source_port_service << endl;
         }
 
         if (port_value == 110)
         {
             source_port_service = "POP3";
-            cout << source_port_service << endl;
+            cout << "       " << source_port_service << endl;
         }
 
         if (port_value == 143)
         {
             source_port_service = "IMAP";
-            cout << source_port_service << endl;
+            cout << "       " << source_port_service << endl;
         }
 
         if (port_value == 443)
         {
             source_port_service = "HTTPS";
-            cout << source_port_service << endl;
+            cout << "       " << source_port_service << endl;
         }
 
         if (port_value == 993)
         {
             source_port_service = "IMAP SSL";
-            cout << source_port_service << endl;
+            cout << "       " << source_port_service << endl;
         }
 
         if (port_value == 995)
         {
             source_port_service = "POP SSL";
-            cout << source_port_service << endl;
+            cout << "       " << source_port_service << endl;
         }
     }
 
     if (port_value >= 1024 && port_value <= 49151)
     {
-        cout << "Puerto registrado" << endl;
+        cout << " Puerto registrado" << endl;
     }
 
     if (port_value >= 49152 && port_value <= 65535)
     {
-        cout << "Puerto dinamico o privado" << endl;
+        cout << " Puerto dinamico o privado" << endl;
     }
 }
 
@@ -149,107 +154,107 @@ void TCP::setDestinationPortService(int port_value)
 {
     if (port_value >= 0 && port_value <= 1023)
     {
-        cout << "Puerto bien conocido" << " - " << endl;
+        cout << " Puerto bien conocido" << " - " << endl;
 
         if (port_value == 20)
         {
             destination_port_service = "FTP";
-            cout << destination_port_service << endl;
+            cout << "       " << destination_port_service << endl;
         }
 
         if (port_value == 21)
         {
             destination_port_service = "FTP";
-            cout << destination_port_service << endl;
+            cout << "       " << destination_port_service << endl;
         }
 
         if (port_value == 22)
         {
             destination_port_service = "SSH";
-            cout << destination_port_service << endl;
+            cout << "       " << destination_port_service << endl;
         }
 
         if (port_value == 23)
         {
             destination_port_service = "TELNET";
-            cout << destination_port_service << endl;
+            cout << "       " << destination_port_service << endl;
         }
 
         if (port_value == 25)
         {
             destination_port_service = "SMTP";
-            cout << destination_port_service << endl;
+            cout << "       " << destination_port_service << endl;
         }
 
         if (port_value == 53)
         {
             destination_port_service = "DNS";
-            cout << destination_port_service << endl;
+            cout << "       " << destination_port_service << endl;
         }
 
         if (port_value == 67)
         {
             destination_port_service = "DHCP";
-            cout << destination_port_service << endl;
+            cout << "       " << destination_port_service << endl;
         }
 
         if (port_value == 68)
         {
             destination_port_service = "DHCP";
-            cout << destination_port_service << endl;
+            cout << "       " << destination_port_service << endl;
         }
 
         if (port_value == 69)
         {
             destination_port_service = "TFTP";
-            cout << destination_port_service << endl;
+            cout << "       " << destination_port_service << endl;
         }
 
         if (port_value == 80)
         {
             destination_port_service = "HTTP";
-            cout << destination_port_service << endl;
+            cout << "       " << destination_port_service << endl;
         }
 
         if (port_value == 110)
         {
             destination_port_service = "POP3";
-            cout << destination_port_service << endl;
+            cout << "       " << destination_port_service << endl;
         }
 
         if (port_value == 143)
         {
             destination_port_service = "IMAP";
-            cout << destination_port_service << endl;
+            cout << "       " << destination_port_service << endl;
         }
 
         if (port_value == 443)
         {
             destination_port_service = "HTTPS";
-            cout << destination_port_service << endl;
+            cout << "       " << destination_port_service << endl;
         }
 
         if (port_value == 993)
         {
             destination_port_service = "IMAP SSL";
-            cout << destination_port_service << endl;
+            cout << "       " << destination_port_service << endl;
         }
 
         if (port_value == 995)
         {
             destination_port_service = "POP SSL";
-            cout << destination_port_service << endl;
+            cout << "       " << destination_port_service << endl;
         }
     }
 
     if (port_value >= 1024 && port_value <= 49151)
     {
-        cout << "Puerto registrado" << endl;
+        cout << " Puerto registrado" << endl;
     }
 
     if (port_value >= 49152 && port_value <= 65535)
     {
-        cout << "Puerto dinamico o privado" << endl;
+        cout << "  Puerto dinamico o privado" << endl;
     }
 }
 
@@ -392,7 +397,7 @@ void TCP::setTCPHeader(string data)
     FIN_flag = binaryToDecimal(aux);
     aux.clear();
 
-    //TamaÃ±o de ventana - 16 bits - Decimal
+    //Tamaño de ventana - 16 bits - Decimal
     bitAcumulador += 16;
     for (size_t i = bit; i <= bitAcumulador; i++)
     {
@@ -428,17 +433,17 @@ void TCP::setTCPHeader(string data)
 
 void TCP::showTCPHeader()
 {
-    cout << "\n ***Cabecera TCP***" << endl;
-    cout << "Puerto de origen: " << source_port << " - ";
+    cout << "\n         ***Cabecera TCP***" << endl;
+    cout << "       Puerto de origen: " << source_port << " - ";
     setSourcePortService(source_port);
-    cout << "Puerto de destino: " << destination_port << " - ";
+    cout << "       Puerto de destino: " << destination_port << " - ";
     setDestinationPortService(destination_port);
-    cout << "Numero de secuencia: " << sequence_number << endl;
-    cout << "Numero de acuse de recibo: " << acknowledgment_number << endl;
-    cout << "Longitud de cabecera: " << offset << endl;
-    cout << "Reservado: " << reserved << endl;
-    cout << "Banderas: " << endl;
-    cout << "   -NS:  " << NS_flag;
+    cout << "       Numero de secuencia: " << sequence_number << endl;
+    cout << "       Numero de acuse de recibo: " << acknowledgment_number << endl;
+    cout << "       Longitud de cabecera: " << offset << endl;
+    cout << "       Reservado: " << reserved << endl;
+    cout << "       Banderas: " << endl;
+    cout << "           -NS:  " << NS_flag;
 
     if (NS_flag == 1)
     {
@@ -449,7 +454,7 @@ void TCP::showTCPHeader()
         cout << " - Desactivado" << endl;
     }
 
-    cout << "   -CWR: " << CWR_flag;
+    cout << "           -CWR: " << CWR_flag;
 
     if (CWR_flag == 1)
     {
@@ -460,7 +465,7 @@ void TCP::showTCPHeader()
         cout << " - Desactivado" << endl;
     }
 
-    cout << "   -ECE: " << ECE_flag;
+    cout << "           -ECE: " << ECE_flag;
 
     if (ECE_flag == 1)
     {
@@ -471,7 +476,7 @@ void TCP::showTCPHeader()
         cout << " - Desactivado" << endl;
     }
 
-    cout << "   -URG: " << URG_flag;
+    cout << "           -URG: " << URG_flag;
 
     if (URG_flag == 1)
     {
@@ -482,7 +487,7 @@ void TCP::showTCPHeader()
         cout << " - Desactivado" << endl;
     }
 
-    cout << "   -ACK: " << ACK_flag;
+    cout << "           -ACK: " << ACK_flag;
 
     if (ACK_flag == 1)
     {
@@ -493,7 +498,7 @@ void TCP::showTCPHeader()
         cout << " - Desactivado" << endl;
     }
 
-    cout << "   -PSH: " << PSH_flag;
+    cout << "           -PSH: " << PSH_flag;
 
     if (PSH_flag == 1)
     {
@@ -504,7 +509,7 @@ void TCP::showTCPHeader()
         cout << " - Desactivado" << endl;
     }
 
-    cout << "   -RST: " << RST_flag;
+    cout << "           -RST: " << RST_flag;
 
     if (RST_flag == 1)
     {
@@ -515,7 +520,7 @@ void TCP::showTCPHeader()
         cout << " - Desactivado" << endl;
     }
 
-    cout << "   -SYN: " << SYN_flag;
+    cout << "           -SYN: " << SYN_flag;
 
     if (SYN_flag == 1)
     {
@@ -526,7 +531,7 @@ void TCP::showTCPHeader()
         cout << " - Desactivado" << endl;
     }
 
-    cout << "   -FIN: " << FIN_flag;
+    cout << "           -FIN: " << FIN_flag;
 
     if (FIN_flag == 1)
     {
@@ -537,9 +542,9 @@ void TCP::showTCPHeader()
         cout << " - Desactivado" << endl;
     }
 
-    cout << "Ventana de recepcion: " << window_size << " bytes" << endl;
-    printf("Suma de verificacion: %02X\n", checksum);
-    cout << "Puntero urgente: " << urgent_pointer << " bytes" << endl;
+    cout << "       Ventana de recepcion: " << window_size << " bytes" << endl;
+    printf("        Suma de verificacion: %02X\n", checksum);
+    cout << "       Puntero urgente: " << urgent_pointer << " bytes" << endl;
 }
 
 string TCP::getPortSourceService()

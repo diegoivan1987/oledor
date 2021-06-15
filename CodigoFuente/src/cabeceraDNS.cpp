@@ -25,7 +25,12 @@ string DNS::toBinary(const vector<unsigned char>& bytes)
 int DNS::binaryToDecimal(const string& number)
 {
     int total;
-    total = stoull(number, 0, 2);
+
+    try{
+        total = stoull(number, 0, 2);
+    }catch(std::invalid_argument& ia){
+        cout << endl << "Wrong data composition: " << ia.what() << endl;
+    }
     return total;
 }
 
@@ -99,7 +104,7 @@ void DNS::setDNSHeader(const string& data, const vector<unsigned char>& domain_n
     RA = binaryToDecimal(aux);
     aux.clear();
 
-    //Z - 3 bits - Decimal   
+    //Z - 3 bits - Decimal
     bitAcumulador += 3;
     for (size_t i = bit; i <= bitAcumulador; i++)
     {
@@ -173,14 +178,14 @@ void DNS::setDNSHeader(const string& data, const vector<unsigned char>& domain_n
     {
         for (size_t a = 0; a < QDCount; a++)
         {
-            //Nombre de dominio - Longitud variable - La longitud total en bytes queda almacenada en i 
+            //Nombre de dominio - Longitud variable - La longitud total en bytes queda almacenada en i
             unsigned char aux_char;
             int i = 0;
             aux_char = domain_name[i];
             while (aux_char != 0)
             {
                 i++;
-                aux_char = domain_name[i];     
+                aux_char = domain_name[i];
             }
 
             //Se incrementa el contador de los bytes para tomar en cuenta la ultima posicion del nombre de dominio
@@ -220,14 +225,14 @@ void DNS::setDNSHeader(const string& data, const vector<unsigned char>& domain_n
     {
         for (size_t a = 0; a < ANCount; a++)
         {
-            //Nombre de dominio - Longitud variable - La longitud total en bytes queda almacenada en i 
+            //Nombre de dominio - Longitud variable - La longitud total en bytes queda almacenada en i
             unsigned char aux_char;
             int i = 0;
             aux_char = domain_name[i];
             while (aux_char != 0)
             {
                 i++;
-                aux_char = domain_name[i];     
+                aux_char = domain_name[i];
             }
 
             //Se incrementa el contador de los bytes para tomar en cuenta la ultima posicion del nombre de dominio
@@ -265,7 +270,7 @@ void DNS::setDNSHeader(const string& data, const vector<unsigned char>& domain_n
                 aux += data[i];
                 bit++;
             }
-            
+
             Attl = binaryToDecimal(aux);
             aux.clear();
 
@@ -276,7 +281,7 @@ void DNS::setDNSHeader(const string& data, const vector<unsigned char>& domain_n
                 aux += data[i];
                 bit++;
             }
-            
+
             Alength = binaryToDecimal(aux);
             aux.clear();
 
@@ -314,7 +319,7 @@ void DNS::setDNSHeader(const string& data, const vector<unsigned char>& domain_n
 
                 AIP[2] = binaryToDecimal(aux);
                 aux.clear();
-                
+
                 bitAcumulador += 8;
                 for (size_t i = bit; i <= bitAcumulador; i++)
                 {
@@ -338,26 +343,26 @@ void DNS::setDNSHeader(const string& data, const vector<unsigned char>& domain_n
                 MXpriority = binaryToDecimal(aux);
                 aux.clear();
                 break;
-            
+
             default:
                 break;
             }
 
             showDNSAnswers(domain_name);
         }
-        
+
     }
-    
+
 }
 
 void DNS::showDNSHeader()
 {
-    cout << "\n\n ***Cabecera DNS***" << endl;
-    printf("ID: %02X\n", id);
+    cout << "           \n\n ***Cabecera DNS***" << endl;
+    printf("            ID: %02X\n", id);
 
     //Impresion de banderas
-    cout << "Banderas: " << endl;
-    cout << "   -QR: " << QR;
+    cout << "           Banderas: " << endl;
+    cout << "               -QR: " << QR;
 
     if (QR == 0)
     {
@@ -369,14 +374,14 @@ void DNS::showDNSHeader()
         cout << " - Respuesta" << endl;
     }
 
-    cout << "   -Op Code: " << op_code;
+    cout << "               -Op Code: " << op_code;
 
     switch (op_code)
     {
     case 0:
         cout << " - Consulta estandar (QUERY)" << endl;
         break;
-    
+
     case 1:
         cout << " - Consulta inversa (IQUERY)" << endl;
         break;
@@ -384,13 +389,13 @@ void DNS::showDNSHeader()
     case 2:
         cout << " - Solicitud de estado del servidor (STATUS)" << endl;
         break;
-    
+
     default:
         cout << " - Valor reservado" << endl;
         break;
     }
 
-    cout << "   -AA: " << AA;
+    cout << "               -AA: " << AA;
 
     if (AA == 0)
     {
@@ -402,7 +407,7 @@ void DNS::showDNSHeader()
         cout << " - Respuesta" << endl;
     }
 
-    cout << "   -TC: " << TC;
+    cout << "               -TC: " << TC;
 
     if (TC == 0)
     {
@@ -414,7 +419,7 @@ void DNS::showDNSHeader()
         cout << " - Truncado" << endl;
     }
 
-    cout << "   -RD: " << RD;
+    cout << "               -RD: " << RD;
 
     if (RD == 0)
     {
@@ -426,7 +431,7 @@ void DNS::showDNSHeader()
         cout << " - Resolucion recursiva" << endl;
     }
 
-    cout << "   -RA: " << RA;
+    cout << "               -RA: " << RA;
 
     if (RA == 0)
     {
@@ -438,9 +443,9 @@ void DNS::showDNSHeader()
         cout << " - Soporta resolucion recursiva" << endl;
     }
 
-    cout << "   -Z: " << Z << endl;
+    cout << "               -Z: " << Z << endl;
 
-    cout << "   -Rcode: " << rCode;
+    cout << "               -Rcode: " << rCode;
 
     switch (rCode)
     {
@@ -467,24 +472,24 @@ void DNS::showDNSHeader()
     case 5:
         cout << " - Rechazado" << endl;
         break;
-    
+
     default:
-        cout << " - Desconocido" << endl;
+        cout << "  - Desconocido" << endl;
         break;
     }
 
-    cout << "Contadores: " << endl;
-    cout << "   -QDCount: " << QDCount  << " entrada(s)" << endl;
-    cout << "   -ANCount: " << ANCount  << " entrada(s)" << endl;
-    cout << "   -NSCount: " << NSCount  << " entrada(s)" << endl;
-    cout << "   -ARCount: " << ARCount  << " entrada(s)" << endl;
+    cout << "           Contadores: " << endl;
+    cout << "               -QDCount: " << QDCount  << " entrada(s)" << endl;
+    cout << "               -ANCount: " << ANCount  << " entrada(s)" << endl;
+    cout << "               -NSCount: " << NSCount  << " entrada(s)" << endl;
+    cout << "               -ARCount: " << ARCount  << " entrada(s)" << endl;
 }
 
 void DNS::showDNSQuestions(const vector<unsigned char>& domain_name)
 {
     //Campo de pregunta
-    cout << "Campo de pregunta" << endl;
-    cout << "   -Nombre de dominio: ";
+    cout << "           Campo de pregunta" << endl;
+    cout << "               -Nombre de dominio: ";
     if (QDCount > 0)
     {
         unsigned char aux_char;
@@ -501,10 +506,10 @@ void DNS::showDNSQuestions(const vector<unsigned char>& domain_name)
             else if (aux_char != 0)
             {
                 cout << ".";
-            }      
+            }
         }
 
-        cout << endl << "   -Tipo: " << Qtype << " - ";
+        cout << endl << "               -Tipo: " << Qtype << " - ";
         switch (Qtype)
         {
         case 1:
@@ -538,13 +543,13 @@ void DNS::showDNSQuestions(const vector<unsigned char>& domain_name)
         case 23:
             cout << "NS" << endl;
             break;
-        
+
         default:
             cout << "Valor desconocido" << endl;
             break;
         }
 
-        cout << "   -Clase: " << Qclass << " - ";
+        cout << "               -Clase: " << Qclass << " - ";
 
         switch (Qclass)
         {
@@ -555,7 +560,7 @@ void DNS::showDNSQuestions(const vector<unsigned char>& domain_name)
         case 3:
             cout << "CH" << endl;
             break;
-        
+
         default:
             cout << "Valor desconocido" << endl;
             break;
@@ -566,8 +571,8 @@ void DNS::showDNSQuestions(const vector<unsigned char>& domain_name)
 void DNS::showDNSAnswers(const vector<unsigned char>& domain_name)
 {
      //Campo de respuesta
-    cout << "Campo de respuesta" << endl;
-    cout << "   -Nombre de dominio: ";
+    cout << "           Campo de respuesta" << endl;
+    cout << "               -Nombre de dominio: ";
     if (ANCount > 0)
     {
         unsigned char aux_char;
@@ -584,11 +589,11 @@ void DNS::showDNSAnswers(const vector<unsigned char>& domain_name)
             else if (aux_char != 0)
             {
                 cout << ".";
-            }      
+            }
         }
         i++;
 
-        cout << endl << "   -Tipo: " << Atype << " - ";
+        cout << endl << "               -Tipo: " << Atype << " - ";
         switch (Atype)
         {
         case 1:
@@ -622,13 +627,13 @@ void DNS::showDNSAnswers(const vector<unsigned char>& domain_name)
         case 23:
             cout << "NS" << endl;
             break;
-        
+
         default:
             cout << "Valor desconocido" << endl;
             break;
         }
 
-        cout << "   -Clase: " << Aclass << " - ";
+        cout << "               -Clase: " << Aclass << " - ";
 
         switch (Aclass)
         {
@@ -639,26 +644,26 @@ void DNS::showDNSAnswers(const vector<unsigned char>& domain_name)
         case 3:
             cout << "CH" << endl;
             break;
-        
+
         default:
             cout << "Valor desconocido" << endl;
             break;
         }
 
-        cout << "   -Tiempo de vida: " << Attl << " segundos" << endl;
-        cout << "   -Longitud de datos: " << Alength << " bytes" << endl;
+        cout << "               -Tiempo de vida: " << Attl << " segundos" << endl;
+        cout << "               -Longitud de datos: " << Alength << " bytes" << endl;
 
         i = i + 10;
 
-        cout << "   -RDATA: " << endl;
+        cout << "               -RDATA: " << endl;
         switch (Atype)
         {
         case 1:
-            cout << "       A: " << AIP[0] << "." << AIP[1] << "." << AIP[2] << "." << AIP[3];
+            cout << "                   A: " << AIP[0] << "." << AIP[1] << "." << AIP[2] << "." << AIP[3];
             break;
 
         case 5:
-            cout << "       CNAME: " ;
+            cout << "                   CNAME: " ;
             unsigned char aux_char;
             aux_char = domain_name[i];
             while (aux_char != 0)
@@ -672,16 +677,16 @@ void DNS::showDNSAnswers(const vector<unsigned char>& domain_name)
                 else if (aux_char != 0)
                 {
                     cout << ".";
-                }      
+                }
             }
             break;
 
         case 6:
-            cout << "       SOA" << endl;
+            cout << "                   SOA" << endl;
             break;
 
         case 12:
-            cout << "       PTR: " << endl;
+            cout << "                   PTR: " << endl;
             aux_char = domain_name[i];
             while (aux_char != 0)
             {
@@ -694,14 +699,14 @@ void DNS::showDNSAnswers(const vector<unsigned char>& domain_name)
                 else if (aux_char != 0)
                 {
                     cout << ".";
-                }      
+                }
             }
             break;
 
         case 15:
-            cout << "       MX: " << endl;
-            cout << "           Prioridad: " << MXpriority << endl;
-            cout << "           Nombre del ordenador: ";
+            cout << "                   MX: " << endl;
+            cout << "                       Prioridad: " << MXpriority << endl;
+            cout << "                       Nombre del ordenador: ";
             i = i + 2;
             aux_char = domain_name[i];
             while (aux_char != 0)
@@ -715,12 +720,12 @@ void DNS::showDNSAnswers(const vector<unsigned char>& domain_name)
                 else if (aux_char != 0)
                 {
                     cout << ".";
-                }      
+                }
             }
             break;
 
         case 22:
-            cout << "       NS: ";
+            cout << "                   NS: ";
             aux_char = domain_name[i];
             while (aux_char != 0)
             {
@@ -733,12 +738,12 @@ void DNS::showDNSAnswers(const vector<unsigned char>& domain_name)
                 else if (aux_char != 0)
                 {
                     cout << ".";
-                }      
+                }
             }
             break;
 
         case 23:
-            cout << "       NS: ";
+            cout << "                   NS: ";
             aux_char = domain_name[i];
             while (aux_char != 0)
             {
@@ -751,12 +756,12 @@ void DNS::showDNSAnswers(const vector<unsigned char>& domain_name)
                 else if (aux_char != 0)
                 {
                     cout << ".";
-                }      
+                }
             }
             break;
-        
+
         default:
-            cout << "Valor desconocido" << endl;
+            cout << "           Valor desconocido" << endl;
             break;
         }
 

@@ -5,14 +5,15 @@ CabeceraIPv4::CabeceraIPv4()
 
 }
 
-int CabeceraIPv4::binToDecimal(string numero)
+int CabeceraIPv4::binToDecimal(string number)
 {
     int total;
 
-    //Con la funcion stoull se hace la conversion de binario a decimal
-    //Los argumentos son stoull(<string en binario>, <0>, <base a convertir>)
-    total = stoull(numero, 0, 2);
-
+    try{
+        total = stoull(number, 0, 2);
+    }catch(std::invalid_argument& ia){
+        cout << endl << "Wrong data composition: " << ia.what() << endl;
+    }
     return total;
 }
 
@@ -157,12 +158,12 @@ void CabeceraIPv4::setCabeceraIPv4(string bin)
 
 void CabeceraIPv4::mostrarCabeceraIPv4()
 {
-    cout << endl << "***Cabecera IPv4***" << endl;
-    cout << "Version: " << versionI << " (IPv4)" << endl;
-    cout << "Tamaño Cabecera: " << cabeceraI << " Palabras, " << cabeceraI*32 << " bits" << endl;
+    cout << endl << "   ***Cabecera IPv4***" << endl;
+    cout << "   Version: " << versionI << " (IPv4)" << endl;
+    cout << "   Tamaï¿½o Cabecera: " << cabeceraI << " Palabras, " << cabeceraI*32 << " bits" << endl;
 
     //Tipo de servicio***
-    cout << "Tipo de Servicio: " << endl;
+    cout << "   Tipo de Servicio: " << endl;
     string desglose3 = "";
     string desglose5 = "";
     for(size_t i = 0; i < tipoServicioS.size(); i++){
@@ -175,65 +176,65 @@ void CabeceraIPv4::mostrarCabeceraIPv4()
     tipoServicioDesglose_3(desglose3);
     tipoServicioDesglose_5(desglose5);
 
-    cout << "Longitud Total: " << longitudI <<endl;
-    cout << "Identificador: " << identificadorI <<endl;
+    cout << "   Longitud Total: " << longitudI <<endl;
+    cout << "   Identificador: " << identificadorI <<endl;
 
     //Flasgs
-    cout << "Flags: " << flagsS <<endl;
+    cout << "   Flags: " << flagsS <<endl;
     flags(flagsS);
 
-    cout << "Posicion Fragmento: " << fragmentoI <<endl;
-    cout << "Tiempo de vida: " << tiempoI <<endl;
+    cout << "   Posicion Fragmento: " << fragmentoI <<endl;
+    cout << "   Tiempo de vida: " << tiempoI <<endl;
 
 
     setProtocolo(protocoloI);
-    cout << "Protocolo: " << protocolo <<endl;
+    cout << "   Protocolo: " << protocolo <<endl;
 
-    printf("Checksum: %02X\n", checksumI);
-    cout << "Direccion IP Origen: " << dirOrigenA[0] << "." << dirOrigenA[1] << "." << dirOrigenA[2] << "." << dirOrigenA[3] << endl;
-    cout << "Direccion IP Destino: " << dirDestinoA[0] << "." << dirDestinoA[1] << "." << dirDestinoA[2] << "." << dirDestinoA[3] << endl;
+    printf("    Checksum: %02X\n", checksumI);
+    cout << "   Direccion IP Origen: " << dirOrigenA[0] << "." << dirOrigenA[1] << "." << dirOrigenA[2] << "." << dirOrigenA[3] << endl;
+    cout << "   Direccion IP Destino: " << dirDestinoA[0] << "." << dirDestinoA[1] << "." << dirDestinoA[2] << "." << dirDestinoA[3] << endl;
 
 }
 
 void CabeceraIPv4::tipoServicioDesglose_3(string bits)
 {
-    cout << "(Desglose de 3 bits)" << endl;
+    cout << "   (Desglose de 3 bits)" << endl;
     if(bits == "000"){
-        cout << "   Urgencia del mensaje: De Rutina" << endl;
+        cout << "       Urgencia del mensaje: De Rutina" << endl;
     }else if(bits == "001"){
-        cout << "   Urgencia del mensaje: Prioritario" << endl;
+        cout << "       Urgencia del mensaje: Prioritario" << endl;
     }else if(bits == "010"){
-        cout << "   Urgencia del mensaje: Inmediato" << endl;
+        cout << "       Urgencia del mensaje: Inmediato" << endl;
     }else if(bits == "011"){
-        cout << "   Urgencia del mensaje: Relampago" << endl;
+        cout << "       Urgencia del mensaje: Relampago" << endl;
     }else if(bits == "100"){
-        cout << "   Urgencia del mensaje: Invalidacion Relampago" << endl;
+        cout << "       Urgencia del mensaje: Invalidacion Relampago" << endl;
     }else if(bits == "101"){
-        cout << "   Urgencia del mensaje: Procesando llamada critica o de emergencia" << endl;
+        cout << "       Urgencia del mensaje: Procesando llamada critica o de emergencia" << endl;
     }else if(bits == "110"){
-        cout << "   Urgencia del mensaje: Control de trabajo de internet" << endl;
+        cout << "       Urgencia del mensaje: Control de trabajo de internet" << endl;
     }else if(bits == "111"){
-        cout << "   Urgencia del mensaje: Control de red" << endl;
+        cout << "       Urgencia del mensaje: Control de red" << endl;
     }
 }
 
 void CabeceraIPv4::tipoServicioDesglose_5(string bits)
 {
-    cout << "(Desglose de 5 bits)" << endl;
+    cout << "   (Desglose de 5 bits)" << endl;
     if(bits[0] == '0'){
-        cout << "   Retardo: Normal" << endl;
+        cout << "       Retardo: Normal" << endl;
     }else if(bits[0] == '1'){
-        cout << "   Retardo: Bajo" << endl;
+        cout << "       Retardo: Bajo" << endl;
     }
     if(bits[1] == '0'){
-        cout << "   Rendimiento: Normal" << endl;
+        cout << "       Rendimiento: Normal" << endl;
     }else if(bits[1] == '1'){
-        cout << "   Rendimiento: Alto" << endl;
+        cout << "       Rendimiento: Alto" << endl;
     }
     if(bits[2] == '0'){
-        cout << "   Fiabilidad: Normal" << endl;
+        cout << "       Fiabilidad: Normal" << endl;
     }else if(bits[2] == '1'){
-        cout << "   Fiabilidad: Alta" << endl;
+        cout << "       Fiabilidad: Alta" << endl;
     }
 
 }
@@ -241,15 +242,15 @@ void CabeceraIPv4::tipoServicioDesglose_5(string bits)
 void CabeceraIPv4::flags(string bits)
 {
     if(bits[1] == '0'){
-        cout << "   Indicador Division: Divisible" << endl;
+        cout << "       Indicador Division: Divisible" << endl;
     }else if(bits[1] == '1'){
-        cout << "   Indicador Division: No Divisible" << endl;
+        cout << "       Indicador Division: No Divisible" << endl;
     }
 
     if(bits[2] == '0'){
-        cout << "   Indicador Fragmento: Ultimo Fragmento" << endl;
+        cout << "       Indicador Fragmento: Ultimo Fragmento" << endl;
     }else if(bits[2] == '1'){
-        cout << "   Indicador Fragmento: Fragmento Intermedio" << endl;
+        cout << "       Indicador Fragmento: Fragmento Intermedio" << endl;
     }
 }
 

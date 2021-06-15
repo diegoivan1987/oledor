@@ -22,7 +22,12 @@ string RARP::toBinary(vector<unsigned char> bytes)
 int RARP::binaryToDecimal(string number)
 {
     int total;
-    total = stoull(number, 0, 2); 
+
+    try{
+        total = stoull(number, 0, 2);
+    }catch(std::invalid_argument& ia){
+        cout << endl << "Wrong data composition: " << ia.what() << endl;
+    }
     return total;
 }
 
@@ -41,7 +46,7 @@ string RARP::hardwareType(int type)
     case 7:
         return "ARCNET";
         break;
-    
+
     case 15:
         return "Frame Relay";
         break;
@@ -91,7 +96,7 @@ string RARP::protocolType(int type)
     case 34525:
         return "IPv6";
         break;
-    
+
     default:
         return "Tipo desconocido";
         break;
@@ -137,7 +142,7 @@ string RARP::opCode(int type)
     case 9:
         return "InRARP Reply";
         break;
-    
+
     default:
         return "Tipo desconocido.";
         break;
@@ -196,7 +201,7 @@ void RARP::setRARPHeader(string data)
 
     //Codigo de operacion - 16 bits - Decimal
     string op_code_str;
-    
+
     for (int i = bit; i <= 175; i++)
     {
         op_code_str += data[i];
@@ -231,7 +236,7 @@ void RARP::setRARPHeader(string data)
     }
 
     mac_source[2] = binaryToDecimal(mac_source_3);
-    
+
     for (int i = bit; i <= 207; i++)
     {
         mac_source_4 += data[i];
@@ -282,7 +287,7 @@ void RARP::setRARPHeader(string data)
     }
 
     mac_destination[2] = binaryToDecimal(mac_destination_3);
-    
+
     for (int i = bit; i <= 255; i++)
     {
         mac_destination_4 += data[i];
@@ -380,15 +385,15 @@ void RARP::setRARPHeader(string data)
 
 void RARP::showRARPHeader()
 {
-    cout << "       Cabecera RARP" << endl;
-    cout << "Tipo de hardware: " << hardware_type << " - " << hardwareType(hardware_type) << endl;
-    printf("Tipo de protocolo: %02X", protocol_type);
-    cout << " - " << protocolType(protocol_type) << endl;
-    cout << "Longitud de la direccion de hardware: " << hardware_address_length << " bytes" << endl;
-    cout << "Longitud de la direccion de protocolo: " << protocol_address_length << " bytes" << endl;
-    cout << "Codigo de operacion: " << opcode << " - " << opCode(opcode) << endl;
-    printf("Direccion de hardware del emisor: %02X:%02X:%02X:%02X:%02X:%02X\n", mac_source[0], mac_source[1], mac_source[2], mac_source[3], mac_source[4], mac_source[5]);
-    printf("Direccion de hardware del Receptor: %02X:%02X:%02X:%02X:%02X:%02X\n", mac_destination[0], mac_destination[1], mac_destination[2], mac_destination[3], mac_destination[4], mac_destination[5]);
-    cout << "Direccion IP del emisor: " << ip_source[0] << "." << ip_source[1] << "." << ip_source[2] << "." << ip_source[3] << endl;
-    cout << "Direccion IP del receptor: " << ip_destination[0] << "." << ip_destination[1] << "." << ip_destination[2] << "." << ip_destination[3] << endl;
+    cout << "   \n ***Cabecera RARP***" << endl;
+    cout << "   Tipo de hardware: " << hardware_type << " - " << hardwareType(hardware_type) << endl;
+    printf("    Tipo de protocolo: %02X", protocol_type);
+    cout << "    - " << protocolType(protocol_type) << endl;
+    cout << "   Longitud de la direccion de hardware: " << hardware_address_length << " bytes" << endl;
+    cout << "   Longitud de la direccion de protocolo: " << protocol_address_length << " bytes" << endl;
+    cout << "   Codigo de operacion: " << opcode << " - " << opCode(opcode) << endl;
+    printf("    Direccion de hardware del emisor: %02X:%02X:%02X:%02X:%02X:%02X\n", mac_source[0], mac_source[1], mac_source[2], mac_source[3], mac_source[4], mac_source[5]);
+    printf("    Direccion de hardware del Receptor: %02X:%02X:%02X:%02X:%02X:%02X\n", mac_destination[0], mac_destination[1], mac_destination[2], mac_destination[3], mac_destination[4], mac_destination[5]);
+    cout << "   Direccion IP del emisor: " << ip_source[0] << "." << ip_source[1] << "." << ip_source[2] << "." << ip_source[3] << endl;
+    cout << "   Direccion IP del receptor: " << ip_destination[0] << "." << ip_destination[1] << "." << ip_destination[2] << "." << ip_destination[3] << endl;
 }
